@@ -1,4 +1,4 @@
-package br.api.Textil.teste;
+package br.api.Textil.OrdemProducao;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

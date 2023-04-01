@@ -1,4 +1,4 @@
-package br.api.Textil.teste;
+package br.api.Textil.OrdemProducao;
 
 public class OrdemProducaoController {
 }
