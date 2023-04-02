@@ -1,5 +1,6 @@
 package br.api.Textil.OrdemProducao;
 
+import com.querydsl.core.types.Predicate;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,7 +21,7 @@ public class OrdemProducaoController {
     public ResponseEntity<OrdemProducaoRepresentation.Detalhes> createOrdemProducao(
             @RequestBody @Valid OrdemProducaoRepresentation.CriarOuAtualizar criar){
 
-        OrdemProducao ordemProducao = this.OrdemProducaoService.criarOrdemProducao(criar);
+        OrdemProducao ordemProducao = this.ordemProducaoService.criarOrdemProducao(criar);
 
         OrdemProducaoRepresentation.Detalhes detalhes =
                 OrdemProducaoRepresentation.Detalhes.from(ordemProducao);
