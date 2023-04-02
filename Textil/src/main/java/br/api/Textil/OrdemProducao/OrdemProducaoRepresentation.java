@@ -24,6 +24,8 @@ public interface OrdemProducaoRepresentation {
         @NotEmpty(message = "O campo data inicial não pode ser vazio")
         private Date dataInicialOp;
 
+        private Date dataFinalOp;
+
         @NotNull(message = "O campo status não pode ser nulo")
         @NotEmpty(message = "O campo status não pode ser vazio")
         private Integer statusOp;
@@ -35,6 +37,8 @@ public interface OrdemProducaoRepresentation {
         @NotNull(message = "O campo lote não pode ser nulo")
         @NotEmpty(message = "O campo lote não pode ser vazio")
         private String loteOp;
+
+        private String obsOp;
 
         public static Detalhes from(OrdemProducao ordemProducao) {
             return Detalhes.builder()

@@ -34,5 +34,5 @@ public class OrdemProducao {
     private String loteOp;
 
     @Column(name = "ObsOp")
-    private String ObsOp;
+    private String obsOp;
 }
