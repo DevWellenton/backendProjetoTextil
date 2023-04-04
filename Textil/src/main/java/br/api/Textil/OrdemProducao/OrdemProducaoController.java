@@ -1,7 +1,7 @@
 package br.api.Textil.OrdemProducao;
 
 import com.querydsl.core.types.Predicate;
-import jakarta.validation.Valid;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -9,13 +9,17 @@ import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import jakarta.validation.Valid;
 import java.util.List;
 import java.util.Objects;
 
+@RestController
+@RequestMapping("api/treinador")
+@CrossOrigin("*")
+@AllArgsConstructor
 public class OrdemProducaoController {
 
     private OrdemProducaoService ordemProducaoService;
-    private OrdemProducaoRepository ordemProducaoRepository;
 
     @PostMapping("/")
     public ResponseEntity<OrdemProducaoRepresentation.Detalhes> createOrdemProducao(
@@ -28,7 +32,6 @@ public class OrdemProducaoController {
 
         return ResponseEntity.ok(detalhes);
     }
-
     @GetMapping("/")
     public ResponseEntity<List<OrdemProducaoRepresentation.Lista>> buscarOrdensProducao(
             @QuerydslPredicate(root = OrdemProducao.class) Predicate filtroURI,

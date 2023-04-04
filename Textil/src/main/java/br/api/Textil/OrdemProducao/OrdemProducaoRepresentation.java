@@ -76,7 +76,6 @@ public interface OrdemProducaoRepresentation {
                     .build();
         }
     }
-
     @Data
     @Builder
     @JsonInclude(JsonInclude.Include.NON_NULL)

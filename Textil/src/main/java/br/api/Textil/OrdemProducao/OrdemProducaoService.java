@@ -14,6 +14,7 @@ import java.util.Optional;
 @AllArgsConstructor
 @Slf4j
 public class OrdemProducaoService {
+
     private OrdemProducaoRepository ordemProducaoRepository;
 
     public OrdemProducao criarOrdemProducao(OrdemProducaoRepresentation.CriarOuAtualizar criar){
@@ -27,7 +28,6 @@ public class OrdemProducaoService {
                 .obsOp(criar.getObsOp())
                 .build());
     }
-
     public Page<OrdemProducao> buscarTodos(Pageable pageable) {
         return this.ordemProducaoRepository.findAll(pageable);
     }
