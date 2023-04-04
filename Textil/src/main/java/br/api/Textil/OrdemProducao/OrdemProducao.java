@@ -1,6 +1,7 @@
 package br.api.Textil.OrdemProducao;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,14 +26,17 @@ public class OrdemProducao {
     private Date dataFinalOp;
 
     @Column(name = "statusOp")
-    private Integer statusOp;
+    @Enumerated(value = EnumType.STRING)
+    private StatusOrdemProducao statusOp;
 
     @Column(name = "qtdePecasOp")
     private Integer qtdePecasOp;
 
+    @Size(max = 20)
     @Column(name = "loteOp")
     private String loteOp;
 
+    @Size(max = 255)
     @Column(name = "ObsOp")
     private String obsOp;
 }
