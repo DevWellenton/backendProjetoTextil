@@ -1,19 +1,19 @@
 package br.api.Textil.OrdemProducao;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Entity(name = "ordensProducao")
+@Entity(name = "ordemProducao")
 public class OrdemProducao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,7 +27,7 @@ public class OrdemProducao {
 
     @Column(name = "statusOp")
     @Enumerated(value = EnumType.STRING)
-    private StatusOrdemProducao statusOp;
+    private StatusOrdemProducao statusOrdemProducao;
 
     @Column(name = "qtdePecasOp")
     private Integer qtdePecasOp;

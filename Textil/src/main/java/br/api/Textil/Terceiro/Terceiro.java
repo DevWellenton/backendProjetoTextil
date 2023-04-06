@@ -1,11 +1,12 @@
 package br.api.Textil.Terceiro;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 @Data
 @AllArgsConstructor
@@ -27,27 +28,27 @@ public class Terceiro {
 
     @Size(max = 255)
     @Column(name = "EnderecoTerceiro")
-    private String EnderecoTerceiro;
+    private String enderecoTerceiro;
 
     @Size(max = 8)
     @Column(name = "CepTerceiro")
-    private String CepTerceiro;
+    private String cepTerceiro;
 
     @Size(max = 100)
     @Column(name = "BairroTerceiro")
-    private String BairroTerceiro;
+    private String bairroTerceiro;
 
     @Size(max = 10)
     @Column(name = "NumeroTerceiro")
-    private String NumeroTerceiro;
+    private String numeroTerceiro;
 
     @Size(max = 11)
     @Column(name = "TelefoneTerceiro")
-    private String TelefoneTerceiro;
+    private String telefoneTerceiro;
 
     @Size(max = 50)
     @Column(name = "ContatoTerceiro")
-    private String ContatoTerceiro;
+    private String contatoTerceiro;
 
     @Column(name = "statusTerceiro")
     @Enumerated(value = EnumType.STRING)

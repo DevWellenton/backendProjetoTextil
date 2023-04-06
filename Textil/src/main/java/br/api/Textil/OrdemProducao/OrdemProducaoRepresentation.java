@@ -1,13 +1,13 @@
 package br.api.Textil.OrdemProducao;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,7 +28,7 @@ public interface OrdemProducaoRepresentation {
 
         @NotNull(message = "O campo status não pode ser nulo")
         @NotEmpty(message = "O campo status não pode ser vazio")
-        private Integer statusOp;
+        private StatusOrdemProducao statusOrdemProducao;
 
         @NotNull(message = "O campo quantidade de peças não pode ser nulo")
         @NotEmpty(message = "O campo quantidade de peças não pode ser vazio")
@@ -45,7 +45,7 @@ public interface OrdemProducaoRepresentation {
                     .id(ordemProducao.getIdOrdemProducao())
                     .dataInicialOp(ordemProducao.getDataInicialOp())
                     .dataFinalOp(ordemProducao.getDataFinalOp())
-                    .statusOp(ordemProducao.getStatusOp())
+                    .statusOrdemProducao(ordemProducao.getStatusOrdemProducao())
                     .qtdePecasOp(ordemProducao.getQtdePecasOp())
                     .loteOp(ordemProducao.getLoteOp())
                     .obsOp(ordemProducao.getObsOp())
@@ -59,7 +59,7 @@ public interface OrdemProducaoRepresentation {
         private Long id;
         private Date dataInicialOp;
         private Date dataFinalOp;
-        private Integer statusOp;
+        private StatusOrdemProducao statusOrdemProducao;
         private Integer qtdePecasOp;
         private String loteOp;
         private String obsOp;
@@ -69,7 +69,7 @@ public interface OrdemProducaoRepresentation {
                     .id(ordemProducao.getIdOrdemProducao())
                     .dataInicialOp(ordemProducao.getDataInicialOp())
                     .dataFinalOp(ordemProducao.getDataFinalOp())
-                    .statusOp(ordemProducao.getStatusOp())
+                    .statusOrdemProducao(ordemProducao.getStatusOrdemProducao())
                     .qtdePecasOp(ordemProducao.getQtdePecasOp())
                     .loteOp(ordemProducao.getLoteOp())
                     .obsOp(ordemProducao.getObsOp())
@@ -83,7 +83,7 @@ public interface OrdemProducaoRepresentation {
         private Long id;
         private Date dataInicialOp;
         private Date dataFinalOp;
-        private Integer statusOp;
+        private StatusOrdemProducao statusOrdemProducao;
         private Integer qtdePecasOp;
         private String loteOp;
         private String obsOp;
@@ -93,7 +93,7 @@ public interface OrdemProducaoRepresentation {
                     .id(ordemProducao.getIdOrdemProducao())
                     .dataInicialOp(ordemProducao.getDataInicialOp())
                     .dataFinalOp(ordemProducao.getDataFinalOp())
-                    .statusOp(ordemProducao.getStatusOp())
+                    .statusOrdemProducao(ordemProducao.getStatusOrdemProducao())
                     .qtdePecasOp(ordemProducao.getQtdePecasOp())
                     .loteOp(ordemProducao.getLoteOp())
                     .obsOp(ordemProducao.getObsOp())
