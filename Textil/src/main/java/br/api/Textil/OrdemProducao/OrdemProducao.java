@@ -1,38 +1,42 @@
 package br.api.Textil.OrdemProducao;
 
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import javax.persistence.*;
+import javax.validation.constraints.Size;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Entity(name = "ordensProducao")
+@Entity(name = "ordemProducao")
 public class OrdemProducao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idOrdemProducao;
 
     @Column(name = "dataInicialOp")
-    private Date dataInicialOp;
+    private LocalDateTime dataInicialOp;
 
     @Column(name = "dataFinalOp")
-    private Date dataFinalOp;
+    private LocalDateTime dataFinalOp;
 
     @Column(name = "statusOp")
-    private Integer statusOp;
+    @Enumerated(value = EnumType.STRING)
+    private StatusOrdemProducao statusOrdemProducao;
 
     @Column(name = "qtdePecasOp")
     private Integer qtdePecasOp;
 
+    @Size(max = 20)
     @Column(name = "loteOp")
     private String loteOp;
 
+    @Size(max = 255)
     @Column(name = "ObsOp")
     private String obsOp;
 }

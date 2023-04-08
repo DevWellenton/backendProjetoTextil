@@ -14,6 +14,7 @@ import java.util.Optional;
 @AllArgsConstructor
 @Slf4j
 public class OrdemProducaoService {
+
     private OrdemProducaoRepository ordemProducaoRepository;
 
     public OrdemProducao criarOrdemProducao(OrdemProducaoRepresentation.CriarOuAtualizar criar){
@@ -21,13 +22,12 @@ public class OrdemProducaoService {
         return this.ordemProducaoRepository.save(OrdemProducao.builder()
                 .dataInicialOp(criar.getDataInicialOp())
                 .dataFinalOp(criar.getDataFinalOp())
-                .statusOp(criar.getStatusOp())
+                .statusOrdemProducao(criar.getStatusOrdemProducao())
                 .qtdePecasOp(criar.getQtdePecasOp())
                 .loteOp(criar.getLoteOp())
                 .obsOp(criar.getObsOp())
                 .build());
     }
-
     public Page<OrdemProducao> buscarTodos(Pageable pageable) {
         return this.ordemProducaoRepository.findAll(pageable);
     }
@@ -46,7 +46,7 @@ public class OrdemProducaoService {
                 .idOrdemProducao(idOrdemProducao)
                 .dataInicialOp(atualizar.getDataInicialOp())
                 .dataFinalOp(atualizar.getDataFinalOp())
-                .statusOp(atualizar.getStatusOp())
+                .statusOrdemProducao(atualizar.getStatusOrdemProducao())
                 .qtdePecasOp(atualizar.getQtdePecasOp())
                 .loteOp(atualizar.getLoteOp())
                 .obsOp(atualizar.getObsOp())
