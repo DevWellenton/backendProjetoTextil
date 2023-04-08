@@ -44,7 +44,6 @@ public interface TerceiroRepresentation {
         private String numeroTerceiro;
 
         @NotNull(message = "O campo status não pode ser nulo")
-        @NotEmpty(message = "O campo status não pode ser vazio")
         private StatusTerceiro statusTerceiro;
 
         private String telefoneTerceiro;

@@ -29,7 +29,6 @@ public interface UsuarioRepresentation {
         private String senhaUsuario;
 
         @NotNull(message = "O campo tipo não pode ser nulo")
-        @NotEmpty(message = "O campo tipo não pode ser vazio")
         private Integer tipoUsuario;
 
         @NotNull(message = "O campo email não pode ser nulo")

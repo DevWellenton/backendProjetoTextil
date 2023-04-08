@@ -1,6 +1,7 @@
 package br.api.Textil.Usuario;
 
 import com.querydsl.core.types.Predicate;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -12,6 +13,10 @@ import javax.validation.Valid;
 import java.util.List;
 import java.util.Objects;
 
+@RestController
+@RequestMapping("api/usuario")
+@CrossOrigin("*")
+@AllArgsConstructor
 public class UsuarioController {
 
     private UsuarioService usuarioService;
