@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -20,10 +20,10 @@ public class OrdemProducao {
     private Long idOrdemProducao;
 
     @Column(name = "dataInicialOp")
-    private Date dataInicialOp;
+    private LocalDateTime dataInicialOp;
 
     @Column(name = "dataFinalOp")
-    private Date dataFinalOp;
+    private LocalDateTime dataFinalOp;
 
     @Column(name = "statusOp")
     @Enumerated(value = EnumType.STRING)

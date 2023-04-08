@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,17 +21,14 @@ public interface OrdemProducaoRepresentation {
     class CriarOuAtualizar {
 
         @NotNull(message = "O campo data inicial não pode ser nulo")
-        @NotEmpty(message = "O campo data inicial não pode ser vazio")
-        private Date dataInicialOp;
+        private LocalDateTime dataInicialOp;
 
-        private Date dataFinalOp;
+        private LocalDateTime dataFinalOp;
 
         @NotNull(message = "O campo status não pode ser nulo")
-        @NotEmpty(message = "O campo status não pode ser vazio")
         private StatusOrdemProducao statusOrdemProducao;
 
         @NotNull(message = "O campo quantidade de peças não pode ser nulo")
-        @NotEmpty(message = "O campo quantidade de peças não pode ser vazio")
         private Integer qtdePecasOp;
 
         @NotNull(message = "O campo lote não pode ser nulo")
@@ -57,8 +54,8 @@ public interface OrdemProducaoRepresentation {
     @Builder
     class Detalhes {
         private Long id;
-        private Date dataInicialOp;
-        private Date dataFinalOp;
+        private LocalDateTime dataInicialOp;
+        private LocalDateTime dataFinalOp;
         private StatusOrdemProducao statusOrdemProducao;
         private Integer qtdePecasOp;
         private String loteOp;
@@ -81,8 +78,8 @@ public interface OrdemProducaoRepresentation {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     class Lista {
         private Long id;
-        private Date dataInicialOp;
-        private Date dataFinalOp;
+        private LocalDateTime dataInicialOp;
+        private LocalDateTime dataFinalOp;
         private StatusOrdemProducao statusOrdemProducao;
         private Integer qtdePecasOp;
         private String loteOp;
