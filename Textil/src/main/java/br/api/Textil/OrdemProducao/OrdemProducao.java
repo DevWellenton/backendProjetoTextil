@@ -1,5 +1,7 @@
 package br.api.Textil.OrdemProducao;
 
+import br.api.Textil.Terceiro.Terceiro;
+import br.api.Textil.Usuario.Usuario;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -39,4 +41,10 @@ public class OrdemProducao {
     @Size(max = 255)
     @Column(name = "ObsOp")
     private String obsOp;
+
+    @ManyToOne
+    private Usuario usuario;
+
+    @ManyToOne
+    private Terceiro terceiro;
 }
