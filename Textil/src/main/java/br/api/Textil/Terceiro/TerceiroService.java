@@ -20,12 +20,12 @@ public class TerceiroService {
     public Terceiro criarTerceiro(TerceiroRepresentation.CriarOuAtualizar criar){
 
         return this.terceiroRepository.save(Terceiro.builder()
-                .nomeTerceiro(criar.getNomeTerceiro())
-                .cnpjCpfTerceiro(criar.getCnpjCpfTerceiro())
+                .razaoSocial(criar.getRazaoSocial())
+                .cnpjTerceiro(criar.getCnpjTerceiro())
                 .cepTerceiro(criar.getCepTerceiro())
                 .bairroTerceiro(criar.getBairroTerceiro())
                 .numeroTerceiro(criar.getNumeroTerceiro())
-                .statusTerceiro(criar.getStatusTerceiro())
+                .enumStatus(criar.getEnumStatus())
                 .telefoneTerceiro(criar.getTelefoneTerceiro())
                 .contatoTerceiro(criar.getContatoTerceiro())
                 .build());
@@ -45,12 +45,12 @@ public class TerceiroService {
 
         Terceiro terceiroParaAtualizar = Terceiro.builder()
                 .idTerceiro(idTerceiro)
-                .nomeTerceiro(atualizar.getNomeTerceiro())
-                .cnpjCpfTerceiro(atualizar.getCnpjCpfTerceiro())
+                .razaoSocial(atualizar.getRazaoSocial())
+                .cnpjTerceiro(atualizar.getCnpjTerceiro())
                 .cepTerceiro(atualizar.getCepTerceiro())
                 .bairroTerceiro(atualizar.getBairroTerceiro())
                 .numeroTerceiro(atualizar.getNumeroTerceiro())
-                .statusTerceiro(atualizar.getStatusTerceiro())
+                .enumStatus(atualizar.getEnumStatus())
                 .telefoneTerceiro(atualizar.getTelefoneTerceiro())
                 .contatoTerceiro(atualizar.getContatoTerceiro())
                 .build();

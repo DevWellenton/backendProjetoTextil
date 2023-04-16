@@ -23,18 +23,18 @@ public class Usuario {
     private Long idUsuario;
 
     @Size(max = 100)
-    @Column(name = "NomeUsuario")
+    @Column(name = "nomeUsuario")
     private String nomeUsuario;
 
     @Size(max = 10)
-    @Column(name = "SenhaUsuario")
+    @Column(name = "senhaUsuario")
     private String senhaUsuario;
 
-    @Column(name = "TipoUsuario")
+    @Column(name = "tipoUsuario")
     private Integer tipoUsuario;
 
     @Size(max = 100)
-    @Column(name = "EmailUsuario")
+    @Column(name = "emailUsuario")
     private String emailUsuario;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario", orphanRemoval = true)
