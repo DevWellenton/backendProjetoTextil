@@ -24,6 +24,7 @@ public class UsuarioService {
                 .senhaUsuario(criar.getSenhaUsuario())
                 .tipoUsuario(criar.getTipoUsuario())
                 .emailUsuario(criar.getEmailUsuario())
+                .enumStatus(criar.getEnumStatus())
                 .build());
     }
     public Page<Usuario> buscarTodos(Pageable pageable) {
@@ -45,6 +46,7 @@ public class UsuarioService {
                 .senhaUsuario(atualizar.getSenhaUsuario())
                 .tipoUsuario(atualizar.getTipoUsuario())
                 .emailUsuario(atualizar.getEmailUsuario())
+                .enumStatus(atualizar.getEnumStatus())
                 .build();
 
         return this.usuarioRepository.save(usuarioParaAtualizar);

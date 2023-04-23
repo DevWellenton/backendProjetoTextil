@@ -1,6 +1,7 @@
 package br.api.Textil.Usuario;
 
 
+import br.api.Textil.Enum.EnumStatus;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -35,6 +36,9 @@ public interface UsuarioRepresentation {
         @NotEmpty(message = "O campo email não pode ser vazio")
         private String emailUsuario;
 
+        @NotNull(message = "O campo status não pode ser nulo")
+        private EnumStatus enumStatus;
+
         public static UsuarioRepresentation.Detalhes from(Usuario usuario) {
             return UsuarioRepresentation.Detalhes.builder()
                     .id(usuario.getIdUsuario())
@@ -42,6 +46,7 @@ public interface UsuarioRepresentation {
                     .senhaUsuario(usuario.getSenhaUsuario())
                     .tipoUsuario(usuario.getTipoUsuario())
                     .emailUsuario(usuario.getEmailUsuario())
+                    .enumStatus(usuario.getEnumStatus())
                     .build();
         }
     }
@@ -53,6 +58,7 @@ public interface UsuarioRepresentation {
         private String senhaUsuario;
         private Integer tipoUsuario;
         private String emailUsuario;
+        private EnumStatus enumStatus;
 
         public static UsuarioRepresentation.Detalhes from(Usuario usuario) {
             return UsuarioRepresentation.Detalhes.builder()
@@ -61,6 +67,7 @@ public interface UsuarioRepresentation {
                     .senhaUsuario(usuario.getSenhaUsuario())
                     .tipoUsuario(usuario.getTipoUsuario())
                     .emailUsuario(usuario.getEmailUsuario())
+                    .enumStatus(usuario.getEnumStatus())
                     .build();
         }
     }
@@ -73,6 +80,7 @@ public interface UsuarioRepresentation {
         private String senhaUsuario;
         private Integer tipoUsuario;
         private String emailUsuario;
+        private EnumStatus enumStatus;
 
         private static Lista from(Usuario usuario) {
             return Lista.builder()
@@ -81,6 +89,7 @@ public interface UsuarioRepresentation {
                     .senhaUsuario(usuario.getSenhaUsuario())
                     .tipoUsuario(usuario.getTipoUsuario())
                     .emailUsuario(usuario.getEmailUsuario())
+                    .enumStatus(usuario.getEnumStatus())
                     .build();
         }
         public static List<Lista> from(List<Usuario> usuarioList){
