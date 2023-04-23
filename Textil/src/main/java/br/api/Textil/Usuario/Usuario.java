@@ -1,5 +1,6 @@
 package br.api.Textil.Usuario;
 
+import br.api.Textil.Enum.EnumStatus;
 import br.api.Textil.OrdemProducao.OrdemProducao;
 import br.api.Textil.Terceiro.Terceiro;
 import lombok.AllArgsConstructor;
@@ -36,6 +37,10 @@ public class Usuario {
     @Size(max = 100)
     @Column(name = "emailUsuario")
     private String emailUsuario;
+
+    @Column(name = "statusUsuario")
+    @Enumerated(value = EnumType.STRING)
+    private EnumStatus enumStatus;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario", orphanRemoval = true)
     List<OrdemProducao> OrdemProducao = new ArrayList<>();
