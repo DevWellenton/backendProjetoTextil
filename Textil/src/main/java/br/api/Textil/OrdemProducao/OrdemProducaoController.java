@@ -54,6 +54,34 @@ public class OrdemProducaoController {
 
         return ResponseEntity.ok(listaFinal);
     }
+    @GetMapping("/filtroStatus")
+    public ResponseEntity<List<OrdemProducaoRepresentation.Lista>> filtrarPorStatus(
+            @QuerydslPredicate(root = OrdemProducao.class) Predicate filtroURI,
+            @RequestParam("statusOp") String statusOP) {
+
+        Pageable pageable = PageRequest.of(0, 20);
+        Page<OrdemProducao> ordemProducaoStatus = ordemProducaoService.buscarTodos(QOrdemProducao.ordemProducao.statusOrdemProducao.eq(StatusOrdemProducao.valueOf(statusOP)).and(filtroURI), pageable);
+
+
+        List<OrdemProducaoRepresentation.Lista> listaFinal =
+                OrdemProducaoRepresentation.Lista.from(ordemProducaoStatus.getContent());
+
+        return ResponseEntity.ok(listaFinal);
+    }
+    @GetMapping("/filtroLote")
+    public ResponseEntity<List<OrdemProducaoRepresentation.Lista>> filtrarPorLote(
+            @QuerydslPredicate(root = OrdemProducao.class) Predicate filtroURI,
+            @RequestParam("loteOp") String loteOP) {
+
+        Pageable pageable = PageRequest.of(0, 20);
+        Page<OrdemProducao> ordemProducaoLote = ordemProducaoService.buscarTodos(QOrdemProducao.ordemProducao.loteOp.eq(loteOP).and(filtroURI), pageable);
+
+
+        List<OrdemProducaoRepresentation.Lista> listaFinal =
+                OrdemProducaoRepresentation.Lista.from(ordemProducaoLote.getContent());
+
+        return ResponseEntity.ok(listaFinal);
+    }
     @GetMapping("/filtroDataFinal")
     public ResponseEntity<List<OrdemProducaoRepresentation.Lista>> filtrarPorDataFinal(
             @QuerydslPredicate(root = OrdemProducao.class) Predicate filtroURI,
