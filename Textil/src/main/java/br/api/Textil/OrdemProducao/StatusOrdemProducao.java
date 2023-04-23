@@ -1,6 +1,10 @@
 package br.api.Textil.OrdemProducao;
 
 public enum StatusOrdemProducao {
-    Processo,
-    Concluida
+    EmProducao,
+    AguardandoColeta,
+    Concluído,
+    AguardandoEnvio,
+    EmEspera,
+    EmTransito;
 }

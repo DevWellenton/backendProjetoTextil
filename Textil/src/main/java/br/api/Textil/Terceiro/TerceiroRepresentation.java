@@ -1,5 +1,6 @@
 package br.api.Textil.Terceiro;
 
+import br.api.Textil.Enum.EnumStatus;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,11 +22,11 @@ public interface TerceiroRepresentation {
 
         @NotNull(message = "O campo nome não pode ser nulo")
         @NotEmpty(message = "O campo nome não pode ser vazio")
-        private String nomeTerceiro;
+        private String razaoSocial;
 
         @NotNull(message = "O campo Cnpj/Cpf não pode ser nulo")
         @NotEmpty(message = "O campo Cnpj/Cpf não pode ser vazio")
-        private String cnpjCpfTerceiro;
+        private String cnpjTerceiro;
 
         @NotNull(message = "O campo endereço não pode ser nulo")
         @NotEmpty(message = "O campo endereço não pode ser vazio")
@@ -44,7 +45,7 @@ public interface TerceiroRepresentation {
         private String numeroTerceiro;
 
         @NotNull(message = "O campo status não pode ser nulo")
-        private StatusTerceiro statusTerceiro;
+        private EnumStatus enumStatus;
 
         private String telefoneTerceiro;
 
@@ -53,13 +54,13 @@ public interface TerceiroRepresentation {
         public static Detalhes from(Terceiro terceiro) {
             return Detalhes.builder()
                     .id(terceiro.getIdTerceiro())
-                    .nomeTerceiro(terceiro.getNomeTerceiro())
-                    .cnpjCpfTerceiro(terceiro.getCnpjCpfTerceiro())
+                    .razaoSocial(terceiro.getRazaoSocial())
+                    .cnpjTerceiro(terceiro.getCnpjTerceiro())
                     .enderecoTerceiro(terceiro.getEnderecoTerceiro())
                     .cepTerceiro(terceiro.getCepTerceiro())
                     .bairroTerceiro(terceiro.getBairroTerceiro())
                     .numeroTerceiro(terceiro.getNumeroTerceiro())
-                    .statusTerceiro(terceiro.getStatusTerceiro())
+                    .enumStatus(terceiro.getEnumStatus())
                     .telefoneTerceiro(terceiro.getTelefoneTerceiro())
                     .contatoTerceiro(terceiro.getContatoTerceiro())
                     .build();
@@ -69,25 +70,25 @@ public interface TerceiroRepresentation {
     @Builder
     class Detalhes {
         private Long id;
-        private String nomeTerceiro;
-        private String cnpjCpfTerceiro;
+        private String razaoSocial;
+        private String cnpjTerceiro;
         private String enderecoTerceiro;
         private String cepTerceiro;
         private String bairroTerceiro;
         private String numeroTerceiro;
-        private StatusTerceiro statusTerceiro;
+        private EnumStatus enumStatus;
         private String telefoneTerceiro;
         private String contatoTerceiro;
 
         public static TerceiroRepresentation.Detalhes from(Terceiro terceiro){
             return Detalhes.builder()
                     .id(terceiro.getIdTerceiro())
-                    .nomeTerceiro(terceiro.getNomeTerceiro())
-                    .cnpjCpfTerceiro(terceiro.getCnpjCpfTerceiro())
+                    .razaoSocial(terceiro.getRazaoSocial())
+                    .cnpjTerceiro(terceiro.getCnpjTerceiro())
                     .cepTerceiro(terceiro.getCepTerceiro())
                     .bairroTerceiro(terceiro.getBairroTerceiro())
                     .numeroTerceiro(terceiro.getNumeroTerceiro())
-                    .statusTerceiro(terceiro.getStatusTerceiro())
+                    .enumStatus(terceiro.getEnumStatus())
                     .telefoneTerceiro(terceiro.getTelefoneTerceiro())
                     .contatoTerceiro(terceiro.getContatoTerceiro())
                     .build();
@@ -98,25 +99,25 @@ public interface TerceiroRepresentation {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     class Lista {
         private Long id;
-        private String nomeTerceiro;
-        private String cnpjCpfTerceiro;
+        private String razaoSocialTerceiro;
+        private String cnpjTerceiro;
         private String enderecoTerceiro;
         private String cepTerceiro;
         private String bairroTerceiro;
         private String numeroTerceiro;
-        private StatusTerceiro statusTerceiro;
+        private EnumStatus enumStatus;
         private String telefoneTerceiro;
         private String contatoTerceiro;
 
         private static Lista from(Terceiro terceiro) {
             return Lista.builder()
                     .id(terceiro.getIdTerceiro())
-                    .nomeTerceiro(terceiro.getNomeTerceiro())
-                    .cnpjCpfTerceiro(terceiro.getCnpjCpfTerceiro())
+                    .razaoSocialTerceiro(terceiro.getRazaoSocial())
+                    .cnpjTerceiro(terceiro.getCnpjTerceiro())
                     .cepTerceiro(terceiro.getCepTerceiro())
                     .bairroTerceiro(terceiro.getBairroTerceiro())
                     .numeroTerceiro(terceiro.getNumeroTerceiro())
-                    .statusTerceiro(terceiro.getStatusTerceiro())
+                    .enumStatus(terceiro.getEnumStatus())
                     .telefoneTerceiro(terceiro.getTelefoneTerceiro())
                     .contatoTerceiro(terceiro.getContatoTerceiro())
                     .build();

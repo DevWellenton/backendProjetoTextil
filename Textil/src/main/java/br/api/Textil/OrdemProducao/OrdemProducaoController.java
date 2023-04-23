@@ -2,15 +2,18 @@ package br.api.Textil.OrdemProducao;
 
 import com.querydsl.core.types.Predicate;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -50,6 +53,67 @@ public class OrdemProducaoController {
                 OrdemProducaoRepresentation.Lista.from(ordemProducaoList.getContent());
 
         return ResponseEntity.ok(listaFinal);
+    }
+    @GetMapping("/filtroStatus")
+    public ResponseEntity<List<OrdemProducaoRepresentation.Lista>> filtrarPorStatus(
+            @QuerydslPredicate(root = OrdemProducao.class) Predicate filtroURI,
+            @RequestParam("statusOp") String statusOP) {
+
+        Pageable pageable = PageRequest.of(0, 20);
+        Page<OrdemProducao> ordemProducaoStatus = ordemProducaoService.buscarTodos(QOrdemProducao.ordemProducao.statusOrdemProducao.eq(StatusOrdemProducao.valueOf(statusOP)).and(filtroURI), pageable);
+
+
+        List<OrdemProducaoRepresentation.Lista> listaFinal =
+                OrdemProducaoRepresentation.Lista.from(ordemProducaoStatus.getContent());
+
+        return ResponseEntity.ok(listaFinal);
+    }
+    @GetMapping("/filtroLote")
+    public ResponseEntity<List<OrdemProducaoRepresentation.Lista>> filtrarPorLote(
+            @QuerydslPredicate(root = OrdemProducao.class) Predicate filtroURI,
+            @RequestParam("loteOp") String loteOP) {
+
+        Pageable pageable = PageRequest.of(0, 20);
+        Page<OrdemProducao> ordemProducaoLote = ordemProducaoService.buscarTodos(QOrdemProducao.ordemProducao.loteOp.eq(loteOP).and(filtroURI), pageable);
+
+
+        List<OrdemProducaoRepresentation.Lista> listaFinal =
+                OrdemProducaoRepresentation.Lista.from(ordemProducaoLote.getContent());
+
+        return ResponseEntity.ok(listaFinal);
+    }
+    @GetMapping("/filtroDataFinal")
+    public ResponseEntity<List<OrdemProducaoRepresentation.Lista>> filtrarPorDataFinal(
+            @QuerydslPredicate(root = OrdemProducao.class) Predicate filtroURI,
+            @RequestParam("dataInicialOp") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDateTime dataInicial,
+            @RequestParam("dataFinalOp") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDateTime dataFinal) {
+
+        //dataFinal = LocalDateTime.of(2023,1,15,12,51,13);
+        //dataInicial = LocalDateTime.of(2023,1,15,12,51,13);
+
+        Pageable pageable = PageRequest.of(0, 20);
+        Page<OrdemProducao> ordemProducaoFinal = ordemProducaoService.buscarTodos(QOrdemProducao.ordemProducao.dataFinalOp.between(dataInicial, dataFinal).and(filtroURI), pageable);
+
+        List<OrdemProducaoRepresentation.Lista> listaFinal =
+                OrdemProducaoRepresentation.Lista.from(ordemProducaoFinal.getContent());
+
+        return ResponseEntity.ok(listaFinal);
+    }
+    @GetMapping("/filtroDataInicial")
+    public ResponseEntity<List<OrdemProducaoRepresentation.Lista>> filtrarPorDataInicial(
+            @QuerydslPredicate(root = OrdemProducao.class) Predicate filtroURI,
+            @RequestParam("dataInicialOp") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDateTime dataInicial,
+            @RequestParam("dataFinalOp") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDateTime dataFinal) {
+
+        //dataFinal = LocalDateTime.of(2023,1,15,12,51,13);
+
+        Pageable pageable = PageRequest.of(0, 20);
+        Page<OrdemProducao> ordemProducaoInicial = ordemProducaoService.buscarTodos(QOrdemProducao.ordemProducao.dataInicialOp.between(dataInicial, dataFinal).and(filtroURI), pageable);
+
+        List<OrdemProducaoRepresentation.Lista> listaInicial =
+                OrdemProducaoRepresentation.Lista.from(ordemProducaoInicial.getContent());
+
+        return ResponseEntity.ok(listaInicial);
     }
 
     @PutMapping("/{idOrdemProducao}")
