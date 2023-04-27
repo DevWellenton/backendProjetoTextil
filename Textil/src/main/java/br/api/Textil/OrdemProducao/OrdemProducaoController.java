@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
 
@@ -85,14 +87,16 @@ public class OrdemProducaoController {
     @GetMapping("/filtroDataFinal")
     public ResponseEntity<List<OrdemProducaoRepresentation.Lista>> filtrarPorDataFinal(
             @QuerydslPredicate(root = OrdemProducao.class) Predicate filtroURI,
-            @RequestParam("dataInicialOp") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDateTime dataInicial,
-            @RequestParam("dataFinalOp") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDateTime dataFinal) {
+            @RequestParam("dataInicialOp") String dataInicial,
+            @RequestParam("dataFinalOp") String dataFinal) {
 
-        //dataFinal = LocalDateTime.of(2023,1,15,12,51,13);
-        //dataInicial = LocalDateTime.of(2023,1,15,12,51,13);
+        LocalDateTime dataInicialConvert = LocalDateTime.parse(dataInicial);
+        LocalDateTime dataFinalConvert = LocalDateTime.parse(dataFinal);
+        System.out.println("dataInicialConvert= "+dataInicialConvert);
+        System.out.println("dataFinalConvert= "+dataFinalConvert);
 
         Pageable pageable = PageRequest.of(0, 20);
-        Page<OrdemProducao> ordemProducaoFinal = ordemProducaoService.buscarTodos(QOrdemProducao.ordemProducao.dataFinalOp.between(dataInicial, dataFinal).and(filtroURI), pageable);
+        Page<OrdemProducao> ordemProducaoFinal = ordemProducaoService.buscarTodos(QOrdemProducao.ordemProducao.dataFinalOp.between(dataInicialConvert, dataFinalConvert).and(filtroURI), pageable);
 
         List<OrdemProducaoRepresentation.Lista> listaFinal =
                 OrdemProducaoRepresentation.Lista.from(ordemProducaoFinal.getContent());
@@ -102,13 +106,14 @@ public class OrdemProducaoController {
     @GetMapping("/filtroDataInicial")
     public ResponseEntity<List<OrdemProducaoRepresentation.Lista>> filtrarPorDataInicial(
             @QuerydslPredicate(root = OrdemProducao.class) Predicate filtroURI,
-            @RequestParam("dataInicialOp") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDateTime dataInicial,
-            @RequestParam("dataFinalOp") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDateTime dataFinal) {
+            @RequestParam("dataInicialOp") String dataInicial,
+            @RequestParam("dataFinalOp") String dataFinal) {
 
-        //dataFinal = LocalDateTime.of(2023,1,15,12,51,13);
+        LocalDateTime dataInicialConvert = LocalDateTime.parse(dataInicial);
+        LocalDateTime dataFinalConvert = LocalDateTime.parse(dataFinal);
 
         Pageable pageable = PageRequest.of(0, 20);
-        Page<OrdemProducao> ordemProducaoInicial = ordemProducaoService.buscarTodos(QOrdemProducao.ordemProducao.dataInicialOp.between(dataInicial, dataFinal).and(filtroURI), pageable);
+        Page<OrdemProducao> ordemProducaoInicial = ordemProducaoService.buscarTodos(QOrdemProducao.ordemProducao.dataInicialOp.between(dataInicialConvert, dataFinalConvert).and(filtroURI), pageable);
 
         List<OrdemProducaoRepresentation.Lista> listaInicial =
                 OrdemProducaoRepresentation.Lista.from(ordemProducaoInicial.getContent());
