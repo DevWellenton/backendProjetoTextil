@@ -60,9 +60,9 @@ public class Terceiro {
     private EnumStatus enumStatus;
 
     @OneToOne
-    @JoinColumn(name = "IdUsuario")
+    @JoinColumn(name = "IdUsuario_fk", referencedColumnName = "idUsuario")
     private Usuario usuario;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "terceiro", orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "terceiro", orphanRemoval = true )
     List<OrdemProducao> OrdemProducao = new ArrayList<>();
 }

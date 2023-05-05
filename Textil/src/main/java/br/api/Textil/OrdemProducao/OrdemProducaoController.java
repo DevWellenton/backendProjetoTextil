@@ -1,21 +1,18 @@
 package br.api.Textil.OrdemProducao;
 
+import br.api.Textil.Terceiro.Terceiro;
 import com.querydsl.core.types.Predicate;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Objects;
 
@@ -27,7 +24,7 @@ public class OrdemProducaoController {
 
     private OrdemProducaoService ordemProducaoService;
 
-    @PostMapping("/")
+    @PostMapping()
     public ResponseEntity<OrdemProducaoRepresentation.Detalhes> createOrdemProducao(
             @RequestBody @Valid OrdemProducaoRepresentation.CriarOuAtualizar criar){
 
@@ -35,6 +32,20 @@ public class OrdemProducaoController {
 
         OrdemProducaoRepresentation.Detalhes detalhes =
                 OrdemProducaoRepresentation.Detalhes.from(ordemProducao);
+
+        return ResponseEntity.ok(detalhes);
+    }
+    @PutMapping("/{idOrdemProducao}")
+    public ResponseEntity<OrdemProducaoRepresentation.Detalhes> atualizarOrdemProducao(
+            @PathVariable Long idOrdemProducao,
+            @RequestBody OrdemProducaoRepresentation.CriarOuAtualizar atualizar) {
+
+        OrdemProducao ordemProducaoAtualizado =
+                this.ordemProducaoService.atualizar(idOrdemProducao, atualizar);
+
+        OrdemProducaoRepresentation.Detalhes detalhes =
+                OrdemProducaoRepresentation.Detalhes
+                        .from(ordemProducaoAtualizado);
 
         return ResponseEntity.ok(detalhes);
     }
@@ -56,6 +67,18 @@ public class OrdemProducaoController {
 
         return ResponseEntity.ok(listaFinal);
     }
+    @GetMapping("/{idOrdemProducao}")
+    public ResponseEntity<OrdemProducaoRepresentation.Detalhes> buscarUmaOrdemProducao(
+            @PathVariable Long idOrdemProducao) {
+
+        OrdemProducao ordemProducao = this.ordemProducaoService.buscarUmaOrdemProducao(idOrdemProducao);
+
+        OrdemProducaoRepresentation.Detalhes detalhes =
+                OrdemProducaoRepresentation.Detalhes
+                        .from(ordemProducao);
+
+        return ResponseEntity.ok(detalhes);
+    }
     @GetMapping("/filtroStatus")
     public ResponseEntity<List<OrdemProducaoRepresentation.Lista>> filtrarPorStatus(
             @QuerydslPredicate(root = OrdemProducao.class) Predicate filtroURI,
@@ -67,6 +90,20 @@ public class OrdemProducaoController {
 
         List<OrdemProducaoRepresentation.Lista> listaFinal =
                 OrdemProducaoRepresentation.Lista.from(ordemProducaoStatus.getContent());
+
+        return ResponseEntity.ok(listaFinal);
+    }
+    @GetMapping("/filtroTerceiro")
+    public ResponseEntity<List<OrdemProducaoRepresentation.Lista>> filtrarPorTerceiro(
+            @QuerydslPredicate(root = OrdemProducao.class) Predicate filtroURI,
+            @RequestParam("opPorTerceiro") Terceiro terceiro) {
+
+        Pageable pageable = PageRequest.of(0, 20);
+        Page<OrdemProducao> ordemProducaoTerceiro = ordemProducaoService.buscarTodos(QOrdemProducao.ordemProducao.terceiro.eq(terceiro).and(filtroURI), pageable);
+
+
+        List<OrdemProducaoRepresentation.Lista> listaFinal =
+                OrdemProducaoRepresentation.Lista.from(ordemProducaoTerceiro.getContent());
 
         return ResponseEntity.ok(listaFinal);
     }
@@ -87,13 +124,13 @@ public class OrdemProducaoController {
     @GetMapping("/filtroDataFinal")
     public ResponseEntity<List<OrdemProducaoRepresentation.Lista>> filtrarPorDataFinal(
             @QuerydslPredicate(root = OrdemProducao.class) Predicate filtroURI,
-            @RequestParam("dataInicialOp") String dataInicial,
-            @RequestParam("dataFinalOp") String dataFinal) {
+            @RequestParam("dataInicial") String dataInicial,
+            @RequestParam("dataFinal") String dataFinal) {
 
-        LocalDateTime dataInicialConvert = LocalDateTime.parse(dataInicial);
-        LocalDateTime dataFinalConvert = LocalDateTime.parse(dataFinal);
-        System.out.println("dataInicialConvert= "+dataInicialConvert);
-        System.out.println("dataFinalConvert= "+dataFinalConvert);
+        LocalDateTime dataInicialConvert = LocalDateTime.parse(dataInicial);//.atTime(LocalTime.now());
+        LocalDateTime dataFinalConvert = LocalDateTime.parse(dataFinal);//.atTime(LocalTime.now());
+//        System.out.println("dataInicialConvert= "+dataInicialConvert);
+//        System.out.println("dataFinalConvert= "+dataFinalConvert);
 
         Pageable pageable = PageRequest.of(0, 20);
         Page<OrdemProducao> ordemProducaoFinal = ordemProducaoService.buscarTodos(QOrdemProducao.ordemProducao.dataFinalOp.between(dataInicialConvert, dataFinalConvert).and(filtroURI), pageable);
@@ -106,8 +143,8 @@ public class OrdemProducaoController {
     @GetMapping("/filtroDataInicial")
     public ResponseEntity<List<OrdemProducaoRepresentation.Lista>> filtrarPorDataInicial(
             @QuerydslPredicate(root = OrdemProducao.class) Predicate filtroURI,
-            @RequestParam("dataInicialOp") String dataInicial,
-            @RequestParam("dataFinalOp") String dataFinal) {
+            @RequestParam("dataInicial") String dataInicial,
+            @RequestParam("dataFinal") String dataFinal) {
 
         LocalDateTime dataInicialConvert = LocalDateTime.parse(dataInicial);
         LocalDateTime dataFinalConvert = LocalDateTime.parse(dataFinal);
@@ -119,33 +156,5 @@ public class OrdemProducaoController {
                 OrdemProducaoRepresentation.Lista.from(ordemProducaoInicial.getContent());
 
         return ResponseEntity.ok(listaInicial);
-    }
-
-    @PutMapping("/{idOrdemProducao}")
-    public ResponseEntity<OrdemProducaoRepresentation.Detalhes> atualizarOrdemProducao(
-            @PathVariable Long idOrdemProducao,
-            @RequestBody OrdemProducaoRepresentation.CriarOuAtualizar atualizar) {
-
-        OrdemProducao ordemProducaoAtualizado =
-                this.ordemProducaoService.atualizar(idOrdemProducao, atualizar);
-
-        OrdemProducaoRepresentation.Detalhes detalhes =
-                OrdemProducaoRepresentation.Detalhes
-                        .from(ordemProducaoAtualizado);
-
-        return ResponseEntity.ok(detalhes);
-    }
-
-    @GetMapping("/{idOrdemProducao}")
-    public ResponseEntity<OrdemProducaoRepresentation.Detalhes> buscarUmaOrdemProducao(
-            @PathVariable Long idOrdemProducao) {
-
-        OrdemProducao ordemProducao = this.ordemProducaoService.buscarUmaOrdemProducao(idOrdemProducao);
-
-        OrdemProducaoRepresentation.Detalhes detalhes =
-                OrdemProducaoRepresentation.Detalhes
-                        .from(ordemProducao);
-
-        return ResponseEntity.ok(detalhes);
     }
 }

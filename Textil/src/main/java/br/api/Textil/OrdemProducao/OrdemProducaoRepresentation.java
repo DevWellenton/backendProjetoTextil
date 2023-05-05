@@ -1,5 +1,6 @@
 package br.api.Textil.OrdemProducao;
 
+import br.api.Textil.Terceiro.Terceiro;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -37,6 +38,8 @@ public interface OrdemProducaoRepresentation {
 
         private String obsOp;
 
+        private Terceiro terceiro;
+
         public static Detalhes from(OrdemProducao ordemProducao) {
             return Detalhes.builder()
                     .id(ordemProducao.getIdOrdemProducao())
@@ -46,6 +49,7 @@ public interface OrdemProducaoRepresentation {
                     .qtdePecasOp(ordemProducao.getQtdePecasOp())
                     .loteOp(ordemProducao.getLoteOp())
                     .obsOp(ordemProducao.getObsOp())
+                    .terceiro(ordemProducao.getTerceiro())
                     .build();
         }
     }
@@ -60,6 +64,7 @@ public interface OrdemProducaoRepresentation {
         private Integer qtdePecasOp;
         private String loteOp;
         private String obsOp;
+        private Terceiro terceiro;
 
         public static Detalhes from(OrdemProducao ordemProducao){
             return Detalhes.builder()
@@ -70,6 +75,7 @@ public interface OrdemProducaoRepresentation {
                     .qtdePecasOp(ordemProducao.getQtdePecasOp())
                     .loteOp(ordemProducao.getLoteOp())
                     .obsOp(ordemProducao.getObsOp())
+                    .terceiro(ordemProducao.getTerceiro())
                     .build();
         }
     }
