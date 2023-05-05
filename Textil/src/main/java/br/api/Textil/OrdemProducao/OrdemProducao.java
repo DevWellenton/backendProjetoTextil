@@ -43,8 +43,10 @@ public class OrdemProducao {
     private String obsOp;
 
     @ManyToOne
+    @JoinColumn(name = "idUsuario_fk", referencedColumnName = "idUsuario")
     private Usuario usuario;
 
     @ManyToOne
+    @JoinColumn(name = "idTerceiro_fk", referencedColumnName = "idTerceiro")
     private Terceiro terceiro;
 }

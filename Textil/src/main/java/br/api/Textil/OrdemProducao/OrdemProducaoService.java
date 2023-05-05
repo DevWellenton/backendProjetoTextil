@@ -26,6 +26,7 @@ public class OrdemProducaoService {
                 .qtdePecasOp(criar.getQtdePecasOp())
                 .loteOp(criar.getLoteOp())
                 .obsOp(criar.getObsOp())
+                .terceiro(criar.getTerceiro())
                 .build());
     }
     public Page<OrdemProducao> buscarTodos(Pageable pageable) {
