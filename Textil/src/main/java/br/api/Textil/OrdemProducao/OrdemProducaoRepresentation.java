@@ -1,6 +1,8 @@
 package br.api.Textil.OrdemProducao;
 
+import br.api.Textil.Enum.EnumStatus;
 import br.api.Textil.Terceiro.Terceiro;
+import br.api.Textil.Usuario.Usuario;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,6 +14,8 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static br.api.Textil.Enum.EnumStatus.Ativo;
 
 public interface OrdemProducaoRepresentation {
 
@@ -38,6 +42,10 @@ public interface OrdemProducaoRepresentation {
 
         private String obsOp;
 
+        private EnumStatus enumStatus;
+
+        private Usuario usuario;
+
         private Terceiro terceiro;
 
         public static Detalhes from(OrdemProducao ordemProducao) {
@@ -49,6 +57,8 @@ public interface OrdemProducaoRepresentation {
                     .qtdePecasOp(ordemProducao.getQtdePecasOp())
                     .loteOp(ordemProducao.getLoteOp())
                     .obsOp(ordemProducao.getObsOp())
+                    .enumStatus(ordemProducao.getEnumStatus())
+                    .usuario(ordemProducao.getUsuario())
                     .terceiro(ordemProducao.getTerceiro())
                     .build();
         }
@@ -64,6 +74,8 @@ public interface OrdemProducaoRepresentation {
         private Integer qtdePecasOp;
         private String loteOp;
         private String obsOp;
+        private EnumStatus enumStatus;
+        private Usuario usuario;
         private Terceiro terceiro;
 
         public static Detalhes from(OrdemProducao ordemProducao){
@@ -75,6 +87,8 @@ public interface OrdemProducaoRepresentation {
                     .qtdePecasOp(ordemProducao.getQtdePecasOp())
                     .loteOp(ordemProducao.getLoteOp())
                     .obsOp(ordemProducao.getObsOp())
+                    .enumStatus(ordemProducao.getEnumStatus())
+                    .usuario(ordemProducao.getUsuario())
                     .terceiro(ordemProducao.getTerceiro())
                     .build();
         }
@@ -90,6 +104,9 @@ public interface OrdemProducaoRepresentation {
         private Integer qtdePecasOp;
         private String loteOp;
         private String obsOp;
+        private EnumStatus enumStatus;
+        private Usuario usuario;
+        private Terceiro terceiro;
 
         private static Lista from(OrdemProducao ordemProducao){
             return Lista.builder()
@@ -100,12 +117,16 @@ public interface OrdemProducaoRepresentation {
                     .qtdePecasOp(ordemProducao.getQtdePecasOp())
                     .loteOp(ordemProducao.getLoteOp())
                     .obsOp(ordemProducao.getObsOp())
+                    .enumStatus(ordemProducao.getEnumStatus())
+                    .usuario(ordemProducao.getUsuario())
+                    .terceiro(ordemProducao.getTerceiro())
                     .build();
         }
 
         public static List<Lista> from(List<OrdemProducao> ordemProducaoList){
             return ordemProducaoList
-                    .stream()
+//                    .stream()
+                    .stream().filter(ordemProducao -> ordemProducao.getEnumStatus() == Ativo)
                     .map(Lista::from)
                     .collect(Collectors.toList());
         }

@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
 import java.util.Optional;
 
 @Service
@@ -26,7 +25,9 @@ public class OrdemProducaoService {
                 .qtdePecasOp(criar.getQtdePecasOp())
                 .loteOp(criar.getLoteOp())
                 .obsOp(criar.getObsOp())
+                .enumStatus(criar.getEnumStatus())
                 .terceiro(criar.getTerceiro())
+                .usuario(criar.getUsuario())
                 .build());
     }
     public Page<OrdemProducao> buscarTodos(Pageable pageable) {
@@ -51,6 +52,9 @@ public class OrdemProducaoService {
                 .qtdePecasOp(atualizar.getQtdePecasOp())
                 .loteOp(atualizar.getLoteOp())
                 .obsOp(atualizar.getObsOp())
+                .enumStatus(atualizar.getEnumStatus())
+                .terceiro(atualizar.getTerceiro())
+                .usuario(atualizar.getUsuario())
                 .build();
 
         return this.ordemProducaoRepository.save(ordemProducaoParaAtualizar);

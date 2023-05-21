@@ -28,6 +28,7 @@ public class TerceiroService {
                 .enumStatus(criar.getEnumStatus())
                 .telefoneTerceiro(criar.getTelefoneTerceiro())
                 .contatoTerceiro(criar.getContatoTerceiro())
+                .usuario(criar.getUsuario())
                 .build());
     }
     public Page<Terceiro> buscarTodos(Pageable pageable) {
@@ -53,6 +54,7 @@ public class TerceiroService {
                 .enumStatus(atualizar.getEnumStatus())
                 .telefoneTerceiro(atualizar.getTelefoneTerceiro())
                 .contatoTerceiro(atualizar.getContatoTerceiro())
+                .usuario(atualizar.getUsuario())
                 .build();
 
         return this.terceiroRepository.save(terceiroParaAtualizar);

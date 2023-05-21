@@ -1,17 +1,13 @@
 package br.api.Textil.Terceiro;
 
 import br.api.Textil.Enum.EnumStatus;
-import br.api.Textil.OrdemProducao.OrdemProducao;
 import br.api.Textil.Usuario.Usuario;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -62,7 +58,4 @@ public class Terceiro {
     @OneToOne
     @JoinColumn(name = "IdUsuario_fk", referencedColumnName = "idUsuario")
     private Usuario usuario;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "terceiro", orphanRemoval = true )
-    List<OrdemProducao> OrdemProducao = new ArrayList<>();
 }
