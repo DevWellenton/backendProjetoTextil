@@ -1,5 +1,6 @@
 package br.api.Textil.OrdemProducao;
 
+import br.api.Textil.Enum.EnumStatus;
 import br.api.Textil.Terceiro.Terceiro;
 import br.api.Textil.Usuario.Usuario;
 import lombok.AllArgsConstructor;
@@ -41,6 +42,10 @@ public class OrdemProducao {
     @Size(max = 255)
     @Column(name = "ObsOp")
     private String obsOp;
+
+    @Column(name = "situacaoOp")
+    @Enumerated(value = EnumType.STRING)
+    private EnumStatus enumStatus;
 
     @ManyToOne
     @JoinColumn(name = "idUsuario_fk", referencedColumnName = "idUsuario")

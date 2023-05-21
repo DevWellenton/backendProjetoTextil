@@ -1,5 +1,6 @@
 package br.api.Textil.OrdemProducao;
 
+import br.api.Textil.Enum.EnumStatus;
 import br.api.Textil.Terceiro.Terceiro;
 import br.api.Textil.Terceiro.TerceiroRepository;
 import br.api.Textil.exceptions.NotFoundException;
@@ -26,7 +27,6 @@ import java.util.Optional;
 public class OrdemProducaoController {
 
     private OrdemProducaoService ordemProducaoService;
-
     private TerceiroRepository terceiroRepository;
 
     @PostMapping()
@@ -77,6 +77,26 @@ public class OrdemProducaoController {
             @PathVariable Long idOrdemProducao) {
 
         OrdemProducao ordemProducao = this.ordemProducaoService.buscarUmaOrdemProducao(idOrdemProducao);
+
+        if (ordemProducao.getEnumStatus() != EnumStatus.Ativo) {
+            throw new NotFoundException("Ordem de produção não encontrada.");
+        }
+
+        OrdemProducaoRepresentation.Detalhes detalhes =
+                OrdemProducaoRepresentation.Detalhes
+                        .from(ordemProducao);
+
+        return ResponseEntity.ok(detalhes);
+    }
+    @GetMapping("/OrdemProducaoInativo/{idOrdemProducao}")
+    public ResponseEntity<OrdemProducaoRepresentation.Detalhes> buscarUmaOrdemProducaoInativo(
+            @PathVariable Long idOrdemProducao) {
+
+        OrdemProducao ordemProducao = this.ordemProducaoService.buscarUmaOrdemProducao(idOrdemProducao);
+
+        if (ordemProducao.getEnumStatus() != EnumStatus.Inativo) {
+            throw new NotFoundException("Ordem de produção não encontrada.");
+        }
 
         OrdemProducaoRepresentation.Detalhes detalhes =
                 OrdemProducaoRepresentation.Detalhes
@@ -169,19 +189,19 @@ public class OrdemProducaoController {
             @RequestParam("dataInicial") String dataInicial,
             @RequestParam("dataFinal") String dataFinal) {
 
-        LocalDateTime dataInicialConvert = LocalDateTime.parse(dataInicial);
-        LocalDateTime dataFinalConvert = LocalDateTime.parse(dataFinal);
+            LocalDateTime dataInicialConvert = LocalDateTime.parse(dataInicial);
+            LocalDateTime dataFinalConvert = LocalDateTime.parse(dataFinal);
 
-        Pageable pageable = PageRequest.of(0, 20);
-        Page<OrdemProducao> ordemProducaoInicial = ordemProducaoService.buscarTodos(QOrdemProducao.ordemProducao.dataInicialOp.between(dataInicialConvert, dataFinalConvert).and(filtroURI), pageable);
+            Pageable pageable = PageRequest.of(0, 20);
+            Page<OrdemProducao> ordemProducaoInicial = ordemProducaoService.buscarTodos(QOrdemProducao.ordemProducao.dataInicialOp.between(dataInicialConvert, dataFinalConvert).and(filtroURI), pageable);
 
-        List<OrdemProducaoRepresentation.Lista> listaInicial =
-                OrdemProducaoRepresentation.Lista.from(ordemProducaoInicial.getContent());
+            List<OrdemProducaoRepresentation.Lista> listaInicial =
+                    OrdemProducaoRepresentation.Lista.from(ordemProducaoInicial.getContent());
 
-        if (!listaInicial.isEmpty()) {
-            return ResponseEntity.ok(listaInicial);
-        }else{
-            throw new NotFoundException("Ordem de produção não encontrada com o parametro passado.");
-        }
+            if (!listaInicial.isEmpty()) {
+                return ResponseEntity.ok(listaInicial);
+            }else{
+                throw new NotFoundException("Ordem de produção não encontrada com o parametro passado.");
+            }
     }
 }

@@ -1,6 +1,7 @@
 package br.api.Textil.Terceiro;
 
 import br.api.Textil.Enum.EnumStatus;
+import br.api.Textil.Usuario.Usuario;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,6 +12,8 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static br.api.Textil.Enum.EnumStatus.Ativo;
 
 public interface TerceiroRepresentation {
 
@@ -51,6 +54,8 @@ public interface TerceiroRepresentation {
 
         private String contatoTerceiro;
 
+        private Usuario usuario;
+
         public static Detalhes from(Terceiro terceiro) {
             return Detalhes.builder()
                     .id(terceiro.getIdTerceiro())
@@ -63,6 +68,7 @@ public interface TerceiroRepresentation {
                     .enumStatus(terceiro.getEnumStatus())
                     .telefoneTerceiro(terceiro.getTelefoneTerceiro())
                     .contatoTerceiro(terceiro.getContatoTerceiro())
+                    .usuario(terceiro.getUsuario())
                     .build();
         }
     }
@@ -79,6 +85,7 @@ public interface TerceiroRepresentation {
         private EnumStatus enumStatus;
         private String telefoneTerceiro;
         private String contatoTerceiro;
+        private Usuario usuario;
 
         public static TerceiroRepresentation.Detalhes from(Terceiro terceiro){
             return Detalhes.builder()
@@ -91,6 +98,7 @@ public interface TerceiroRepresentation {
                     .enumStatus(terceiro.getEnumStatus())
                     .telefoneTerceiro(terceiro.getTelefoneTerceiro())
                     .contatoTerceiro(terceiro.getContatoTerceiro())
+                    .usuario(terceiro.getUsuario())
                     .build();
         }
     }
@@ -108,6 +116,7 @@ public interface TerceiroRepresentation {
         private EnumStatus enumStatus;
         private String telefoneTerceiro;
         private String contatoTerceiro;
+        private Usuario usuario;
 
         private static Lista from(Terceiro terceiro) {
             return Lista.builder()
@@ -120,11 +129,12 @@ public interface TerceiroRepresentation {
                     .enumStatus(terceiro.getEnumStatus())
                     .telefoneTerceiro(terceiro.getTelefoneTerceiro())
                     .contatoTerceiro(terceiro.getContatoTerceiro())
+                    .usuario(terceiro.getUsuario())
                     .build();
         }
         public static List<Lista> from(List<Terceiro> terceiroList){
             return terceiroList
-                    .stream()
+                    .stream().filter(terceiro -> terceiro.getEnumStatus() == Ativo)
                     .map(Lista::from)
                     .collect(Collectors.toList());
         }
