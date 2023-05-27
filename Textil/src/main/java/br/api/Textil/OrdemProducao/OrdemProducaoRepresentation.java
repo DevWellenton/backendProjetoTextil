@@ -125,8 +125,7 @@ public interface OrdemProducaoRepresentation {
 
         public static List<Lista> from(List<OrdemProducao> ordemProducaoList){
             return ordemProducaoList
-//                    .stream()
-                    .stream().filter(ordemProducao -> ordemProducao.getEnumStatus() == Ativo)
+                    .stream()
                     .map(Lista::from)
                     .collect(Collectors.toList());
         }

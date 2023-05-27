@@ -134,7 +134,7 @@ public interface TerceiroRepresentation {
         }
         public static List<Lista> from(List<Terceiro> terceiroList){
             return terceiroList
-                    .stream().filter(terceiro -> terceiro.getEnumStatus() == Ativo)
+                    .stream()
                     .map(Lista::from)
                     .collect(Collectors.toList());
         }
