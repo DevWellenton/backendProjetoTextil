@@ -5,6 +5,8 @@ import br.api.Textil.OrdemProducao.OrdemProducao;
 import br.api.Textil.OrdemProducao.OrdemProducaoRepresentation;
 import br.api.Textil.OrdemProducao.QOrdemProducao;
 import br.api.Textil.exceptions.NotFoundException;
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.Expression;
 import com.querydsl.core.types.Predicate;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -55,14 +57,16 @@ public class TerceiroController {
 
         return ResponseEntity.ok(detalhes);
     }
-    @GetMapping("/")
+    @GetMapping()
     public ResponseEntity<List<TerceiroRepresentation.Lista>> buscarTerceiro(
-            @QuerydslPredicate(root = Terceiro.class) Predicate filtroURI,
+            @QuerydslPredicate(root = Terceiro.class) BooleanBuilder filtroURI,
             @RequestParam(name="tamanhoPagina", defaultValue = "30") int tamanhoPagina,
             @RequestParam(name = "paginaSelecionada", defaultValue = "0") int paginaSelecionada) {
 
 
         Pageable pageable = PageRequest.of(paginaSelecionada, tamanhoPagina);
+
+        filtroURI = filtroURI.and(QTerceiro.terceiro.enumStatus.eq(EnumStatus.Ativo));
 
         Page<Terceiro> terceiroList = Objects.isNull(filtroURI) ?
                 this.terceiroService.buscarTodos(pageable) :
@@ -73,7 +77,7 @@ public class TerceiroController {
 
         return ResponseEntity.ok(listaFinal);
     }
-    @GetMapping("/{idTerceiro}")
+    @GetMapping("{idTerceiro}")
     public ResponseEntity<TerceiroRepresentation.Detalhes> buscarUmTerceiro(
             @PathVariable Long idTerceiro) {
 
@@ -89,40 +93,42 @@ public class TerceiroController {
 
         return ResponseEntity.ok(detalhes);
     }
-    @GetMapping("/Terceiro/{idTerceiro}")
-    public ResponseEntity<TerceiroRepresentation.Detalhes> buscarUmTerceiroInativo(
-            @PathVariable Long idTerceiro) {
-
-        Terceiro terceiro = this.terceiroService.buscarUmTerceiro(idTerceiro);
-
-        if (terceiro.getEnumStatus() != EnumStatus.Inativo) {
-            throw new NotFoundException("Terceiro não encontrado.");
-        }
-
-        TerceiroRepresentation.Detalhes detalhes =
-                TerceiroRepresentation.Detalhes
-                        .from(terceiro);
-
-        return ResponseEntity.ok(detalhes);
-    }
-    @GetMapping("/filtroNomeTerceiro")
+    @GetMapping("/filtroNome")
     public ResponseEntity<List<TerceiroRepresentation.Lista>> filtrarPorNome(
-            @QuerydslPredicate(root = Terceiro.class) Predicate filtroURI,
+            @QuerydslPredicate(root = Terceiro.class) BooleanBuilder filtroURI,
             @RequestParam("NomeTerceiro") String nome) {
 
-        Optional<Terceiro> nomeFind = terceiroRepository.findOne(QTerceiro.terceiro.razaoSocial.eq(nome));
+        filtroURI = filtroURI.and(QTerceiro.terceiro.enumStatus.eq(EnumStatus.Ativo));
 
-        if (nomeFind.isPresent()){
-            Pageable pageable = PageRequest.of(0, 20);
-            Page<Terceiro> nomeTerceiro = terceiroService.buscarTodos(QTerceiro.terceiro.eq(nomeFind.get()).and(filtroURI), pageable);
+//      Optional<Terceiro> nomeFind = terceiroRepository.findOne(QTerceiro.terceiro.razaoSocial.eq(nome));
 
+        Pageable pageable = PageRequest.of(0, 20);
+        Page<Terceiro> nomeTerceiro = terceiroService.buscarTodos(QTerceiro.terceiro.razaoSocial.likeIgnoreCase('%'+nome+'%').and(filtroURI), pageable);
 
-            List<TerceiroRepresentation.Lista> listaFinal =
-                    TerceiroRepresentation.Lista.from(nomeTerceiro.getContent());
+        List<TerceiroRepresentation.Lista> listaFinal =
+            TerceiroRepresentation.Lista.from(nomeTerceiro.getContent());
 
+        if (!listaFinal.isEmpty()){
             return ResponseEntity.ok(listaFinal);
         }else{
-            throw new NotFoundException("Terceiro não encontrado.");
+            throw new NotFoundException("Terceiro não encontrado com este razão social.");
+        }
+    }
+    @GetMapping("/filtroStatus")
+    public ResponseEntity<List<TerceiroRepresentation.Lista>> filtrarPorStatus(
+            @QuerydslPredicate(root = Terceiro.class) Predicate filtroURI,
+            @RequestParam("StatusTerceiro") String status) {
+
+        Pageable pageable = PageRequest.of(0, 20);
+        Page<Terceiro> statusTerceiro = terceiroService.buscarTodos(QTerceiro.terceiro.enumStatus.eq(EnumStatus.valueOf(String.valueOf(status))).and(filtroURI), pageable);
+
+        List<TerceiroRepresentation.Lista> listaFinal =
+                TerceiroRepresentation.Lista.from(statusTerceiro.getContent());
+
+        if (!listaFinal.isEmpty()){
+            return ResponseEntity.ok(listaFinal);
+        }else{
+            throw new NotFoundException("Terceiro não encontrado com este status.");
         }
     }
 }
