@@ -1,8 +1,10 @@
 package br.api.Textil.OrdemProducao;
 
 import br.api.Textil.Enum.EnumStatus;
+import br.api.Textil.Terceiro.QTerceiro;
 import br.api.Textil.Terceiro.Terceiro;
 import br.api.Textil.Terceiro.TerceiroRepository;
+import br.api.Textil.Terceiro.TerceiroRepresentation;
 import br.api.Textil.exceptions.NotFoundException;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
@@ -133,6 +135,27 @@ public class OrdemProducaoController {
             return ResponseEntity.ok(listaFinal);
         }else{
             throw new NotFoundException("Ordem de produção não encontrada com este terceiro.");
+        }
+    }
+    @GetMapping("/filtroNomeTerceiro")
+    public ResponseEntity<List<OrdemProducaoRepresentation.Lista>> filtrarPorNome(
+            @QuerydslPredicate(root = OrdemProducao.class) BooleanBuilder filtroURI,
+            @RequestParam("NomeTerceiro") String nome) {
+
+        filtroURI = filtroURI.and(QOrdemProducao.ordemProducao.enumStatus.eq(EnumStatus.Ativo));
+
+//      Optional<Terceiro> nomeFind = terceiroRepository.findOne(QTerceiro.terceiro.razaoSocial.eq(nome));
+
+        Pageable pageable = PageRequest.of(0, 20);
+        Page<OrdemProducao> nomeTerceiro = ordemProducaoService.buscarTodos(QOrdemProducao.ordemProducao.terceiro.razaoSocial.likeIgnoreCase('%'+nome+'%').and(filtroURI), pageable);
+
+        List<OrdemProducaoRepresentation.Lista> listaFinal =
+                OrdemProducaoRepresentation.Lista.from(nomeTerceiro.getContent());
+
+        if (!listaFinal.isEmpty()){
+            return ResponseEntity.ok(listaFinal);
+        }else{
+            throw new NotFoundException("Terceiro não encontrado com este razão social.");
         }
     }
     @GetMapping("/filtroLote")
