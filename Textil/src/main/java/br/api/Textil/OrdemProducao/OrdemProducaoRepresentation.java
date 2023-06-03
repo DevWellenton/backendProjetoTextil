@@ -42,7 +42,7 @@ public interface OrdemProducaoRepresentation {
 
         private String obsOp;
 
-        private EnumStatus enumStatus;
+        private EnumStatus enumStatus = Ativo;
 
         private Usuario usuario;
 

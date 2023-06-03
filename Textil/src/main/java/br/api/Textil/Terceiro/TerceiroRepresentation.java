@@ -48,7 +48,7 @@ public interface TerceiroRepresentation {
         private String numeroTerceiro;
 
         @NotNull(message = "O campo status não pode ser nulo")
-        private EnumStatus enumStatus;
+        private EnumStatus enumStatus = Ativo;
 
         private String telefoneTerceiro;
 
