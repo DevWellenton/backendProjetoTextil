@@ -1,7 +1,7 @@
 package br.api.Textil.Terceiro;
 
 import br.api.Textil.Enum.EnumStatus;
-import br.api.Textil.Usuario.Usuario;
+import br.api.Textil.Usuario.models.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -56,6 +56,6 @@ public class Terceiro {
     private EnumStatus enumStatus;
 
     @OneToOne
-    @JoinColumn(name = "IdUsuario_fk", referencedColumnName = "idUsuario")
-    private Usuario usuario;
+    @JoinColumn(name = "IdUsuario_fk", referencedColumnName = "id")
+    private User usuario;
 }

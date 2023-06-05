@@ -2,7 +2,7 @@ package br.api.Textil.OrdemProducao;
 
 import br.api.Textil.Enum.EnumStatus;
 import br.api.Textil.Terceiro.Terceiro;
-import br.api.Textil.Usuario.Usuario;
+import br.api.Textil.Usuario.models.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -48,8 +48,8 @@ public class OrdemProducao {
     private EnumStatus enumStatus;
 
     @ManyToOne
-    @JoinColumn(name = "idUsuario_fk", referencedColumnName = "idUsuario")
-    private Usuario usuario;
+    @JoinColumn(name = "idUsuario_fk", referencedColumnName = "id")
+    private User usuario;
 
     @ManyToOne
     @JoinColumn(name = "idTerceiro_fk", referencedColumnName = "idTerceiro")

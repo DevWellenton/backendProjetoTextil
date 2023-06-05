@@ -1,6 +1,10 @@
 package br.api.Textil.Usuario.models;
 
 import br.api.Textil.Enum.EnumStatus;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -9,6 +13,10 @@ import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 @Entity
 @Table(	name = "users", 
 		uniqueConstraints = { 
@@ -46,9 +54,6 @@ public class User {
 				joinColumns = @JoinColumn(name = "user_id"), 
 				inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles = new HashSet<>();
-
-	public User() {
-	}
 
 	public User(String username, String email, String password, Integer tipoUsuario, EnumStatus enumStatus) {
 		this.username = username;

@@ -2,7 +2,7 @@ package br.api.Textil.OrdemProducao;
 
 import br.api.Textil.Enum.EnumStatus;
 import br.api.Textil.Terceiro.Terceiro;
-import br.api.Textil.Usuario.Usuario;
+import br.api.Textil.Usuario.models.User;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -44,7 +44,7 @@ public interface OrdemProducaoRepresentation {
 
         private EnumStatus enumStatus;
 
-        private Usuario usuario;
+        private User usuario;
 
         private Terceiro terceiro;
 
@@ -75,7 +75,7 @@ public interface OrdemProducaoRepresentation {
         private String loteOp;
         private String obsOp;
         private EnumStatus enumStatus;
-        private Usuario usuario;
+        private User usuario;
         private Terceiro terceiro;
 
         public static Detalhes from(OrdemProducao ordemProducao){
@@ -105,7 +105,7 @@ public interface OrdemProducaoRepresentation {
         private String loteOp;
         private String obsOp;
         private EnumStatus enumStatus;
-        private Usuario usuario;
+        private User usuario;
         private Terceiro terceiro;
 
         private static Lista from(OrdemProducao ordemProducao){

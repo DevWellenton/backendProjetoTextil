@@ -1,7 +1,7 @@
 package br.api.Textil.Terceiro;
 
 import br.api.Textil.Enum.EnumStatus;
-import br.api.Textil.Usuario.Usuario;
+import br.api.Textil.Usuario.models.User;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,8 +12,6 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static br.api.Textil.Enum.EnumStatus.Ativo;
 
 public interface TerceiroRepresentation {
 
@@ -54,7 +52,7 @@ public interface TerceiroRepresentation {
 
         private String contatoTerceiro;
 
-        private Usuario usuario;
+        private User usuario;
 
         public static Detalhes from(Terceiro terceiro) {
             return Detalhes.builder()
@@ -85,7 +83,7 @@ public interface TerceiroRepresentation {
         private EnumStatus enumStatus;
         private String telefoneTerceiro;
         private String contatoTerceiro;
-        private Usuario usuario;
+        private User usuario;
 
         public static TerceiroRepresentation.Detalhes from(Terceiro terceiro){
             return Detalhes.builder()
@@ -116,7 +114,7 @@ public interface TerceiroRepresentation {
         private EnumStatus enumStatus;
         private String telefoneTerceiro;
         private String contatoTerceiro;
-        private Usuario usuario;
+        private User usuario;
 
         private static Lista from(Terceiro terceiro) {
             return Lista.builder()

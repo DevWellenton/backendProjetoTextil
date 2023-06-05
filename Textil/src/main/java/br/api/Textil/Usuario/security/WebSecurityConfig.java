@@ -1,8 +1,8 @@
 package br.api.Textil.Usuario.security;
 
-import com.senac.springjwt.security.jwt.AuthEntryPointJwt;
-import com.senac.springjwt.security.jwt.AuthTokenFilter;
-import com.senac.springjwt.security.services.UserDetailsServiceImpl;
+import br.api.Textil.Usuario.security.jwt.AuthEntryPointJwt;
+import br.api.Textil.Usuario.security.jwt.AuthTokenFilter;
+import br.api.Textil.Usuario.security.services.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

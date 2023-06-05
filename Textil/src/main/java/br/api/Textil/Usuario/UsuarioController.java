@@ -1,5 +1,6 @@
 package br.api.Textil.Usuario;
 
+import br.api.Textil.Usuario.models.User;
 import com.querydsl.core.types.Predicate;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -25,7 +26,7 @@ public class UsuarioController {
     public ResponseEntity<UsuarioRepresentation.Detalhes> createUsuario(
             @RequestBody @Valid UsuarioRepresentation.CriarOuAtualizar criar){
 
-        Usuario usuario = this.usuarioService.criarUsuario(criar);
+        User usuario = this.usuarioService.criarUsuario(criar);
 
         UsuarioRepresentation.Detalhes detalhes =
                 UsuarioRepresentation.Detalhes.from(usuario);
@@ -34,14 +35,14 @@ public class UsuarioController {
     }
     @GetMapping("/")
     public ResponseEntity<List<UsuarioRepresentation.Lista>> buscarUsuario(
-            @QuerydslPredicate(root = Usuario.class) Predicate filtroURI,
+            @QuerydslPredicate(root = User.class) Predicate filtroURI,
             @RequestParam(name="tamanhoPagina", defaultValue = "30") int tamanhoPagina,
             @RequestParam(name = "paginaSelecionada", defaultValue = "0") int paginaSelecionada) {
 
 
         Pageable pageable = PageRequest.of(paginaSelecionada, tamanhoPagina);
 
-        Page<Usuario> usuarioList = Objects.isNull(filtroURI) ?
+        Page<User> usuarioList = Objects.isNull(filtroURI) ?
                 this.usuarioService.buscarTodos(pageable) :
                 this.usuarioService.buscarTodos(filtroURI, pageable);
 
@@ -55,7 +56,7 @@ public class UsuarioController {
             @PathVariable Long idUsuario,
             @RequestBody UsuarioRepresentation.CriarOuAtualizar atualizar) {
 
-        Usuario usuarioAtualizado =
+        User usuarioAtualizado =
                 this.usuarioService.atualizar(idUsuario, atualizar);
 
         UsuarioRepresentation.Detalhes detalhes =
@@ -68,7 +69,7 @@ public class UsuarioController {
     public ResponseEntity<UsuarioRepresentation.Detalhes> buscarUmUsuario(
             @PathVariable Long idUsuario) {
 
-        Usuario usuario = this.usuarioService.buscarUmUsuario(idUsuario);
+        User usuario = this.usuarioService.buscarUmUsuario(idUsuario);
 
         UsuarioRepresentation.Detalhes detalhes =
                 UsuarioRepresentation.Detalhes
