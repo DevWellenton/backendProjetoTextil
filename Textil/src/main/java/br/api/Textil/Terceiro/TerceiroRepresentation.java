@@ -92,6 +92,7 @@ public interface TerceiroRepresentation {
                     .id(terceiro.getIdTerceiro())
                     .razaoSocial(terceiro.getRazaoSocial())
                     .cnpjTerceiro(terceiro.getCnpjTerceiro())
+                    .enderecoTerceiro(terceiro.getEnderecoTerceiro())
                     .cepTerceiro(terceiro.getCepTerceiro())
                     .bairroTerceiro(terceiro.getBairroTerceiro())
                     .numeroTerceiro(terceiro.getNumeroTerceiro())
@@ -107,7 +108,7 @@ public interface TerceiroRepresentation {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     class Lista {
         private Long id;
-        private String razaoSocialTerceiro;
+        private String razaoSocial;
         private String cnpjTerceiro;
         private String enderecoTerceiro;
         private String cepTerceiro;
@@ -121,8 +122,9 @@ public interface TerceiroRepresentation {
         private static Lista from(Terceiro terceiro) {
             return Lista.builder()
                     .id(terceiro.getIdTerceiro())
-                    .razaoSocialTerceiro(terceiro.getRazaoSocial())
+                    .razaoSocial(terceiro.getRazaoSocial())
                     .cnpjTerceiro(terceiro.getCnpjTerceiro())
+                    .enderecoTerceiro(terceiro.getEnderecoTerceiro())
                     .cepTerceiro(terceiro.getCepTerceiro())
                     .bairroTerceiro(terceiro.getBairroTerceiro())
                     .numeroTerceiro(terceiro.getNumeroTerceiro())
