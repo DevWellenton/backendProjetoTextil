@@ -14,10 +14,10 @@ import java.util.Date;
 public class JwtUtils {
 	private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
-	@Value("${senac.app.jwtSecret}")
+	@Value("bezKoderSecretKey")
 	private String jwtSecret;
 
-	@Value("${senac.app.jwtExpirationMs}")
+	@Value("86400000")
 	private int jwtExpirationMs;
 
 	public String generateJwtToken(Authentication authentication) {

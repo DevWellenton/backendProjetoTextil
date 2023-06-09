@@ -13,7 +13,7 @@ import java.util.UUID;
 
 @Service
 public class RefreshTokenService {
-    @Value("${senac.app.jwtRefreshExpirationMs}")
+    @Value("86400000")
     private Long refreshTokenDurationMs;
 
     @Autowired
