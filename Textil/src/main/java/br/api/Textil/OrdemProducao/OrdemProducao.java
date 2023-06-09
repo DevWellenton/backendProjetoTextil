@@ -12,6 +12,8 @@ import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
+import static br.api.Textil.Enum.EnumStatus.Ativo;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -45,7 +47,7 @@ public class OrdemProducao {
 
     @Column(name = "situacaoOp")
     @Enumerated(value = EnumType.STRING)
-    private EnumStatus enumStatus;
+    private EnumStatus enumStatus = Ativo;
 
     @ManyToOne
     @JoinColumn(name = "idUsuario_fk", referencedColumnName = "idUsuario")
