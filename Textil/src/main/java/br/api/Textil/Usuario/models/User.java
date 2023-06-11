@@ -41,7 +41,6 @@ public class User {
 	@Size(max = 120)
 	private String password;
 
-	@NotBlank
 	@Column(name = "tipoUsuario")
 	private Integer tipoUsuario;
 
