@@ -13,6 +13,8 @@ import javax.validation.constraints.Size;
 import java.util.HashSet;
 import java.util.Set;
 
+import static br.api.Textil.Enum.EnumStatus.Ativo;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -46,7 +48,7 @@ public class User {
 
 	@Column(name = "statusUsuario")
 	@Enumerated(value = EnumType.STRING)
-	private EnumStatus enumStatus;
+	private EnumStatus enumStatus = Ativo;
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(	name = "user_roles", 

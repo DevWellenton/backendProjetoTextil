@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 
+import static br.api.Textil.Enum.EnumStatus.Ativo;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -53,7 +55,7 @@ public class Terceiro {
 
     @Column(name = "statusTerceiro")
     @Enumerated(value = EnumType.STRING)
-    private EnumStatus enumStatus;
+    private EnumStatus enumStatus = Ativo;
 
     @OneToOne
     @JoinColumn(name = "IdUsuario_fk", referencedColumnName = "id")
