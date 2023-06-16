@@ -24,7 +24,6 @@ public class UsuarioService {
                 .username(criar.getUserName())
                 .email(criar.getEmail())
                 .password(criar.getPassword())
-                .tipoUsuario(criar.getTipoUsuario())
                 .enumStatus(criar.getEnumStatus())
                 .build());
     }
@@ -46,7 +45,6 @@ public class UsuarioService {
                 .username(atualizar.getUserName())
                 .email(atualizar.getEmail())
                 .password(atualizar.getPassword())
-                .tipoUsuario(atualizar.getTipoUsuario())
                 .enumStatus(atualizar.getEnumStatus())
                 .build();
 

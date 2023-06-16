@@ -102,15 +102,16 @@ public class AuthController {
         Set<Role> roles = new HashSet<>();
 
         List<Role> all = roleRepository.findAll();
+
         if (all.isEmpty()) {
             Role role = new Role();
-            role.setName(ERole.ROLE_ADMIN);
+            role.setName(ERole.ROLE_ADMIN);// 1
             roleRepository.save(role);
             Role role2 = new Role();
-            role2.setName(ERole.ROLE_USER);
+            role2.setName(ERole.ROLE_USER);// 2
             roleRepository.save(role2);
             Role role3 = new Role();
-            role3.setName(ERole.ROLE_MODERATOR);
+            role3.setName(ERole.ROLE_MODERATOR);// 3
             roleRepository.save(role3);
         }
 

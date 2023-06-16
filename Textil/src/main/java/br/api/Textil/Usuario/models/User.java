@@ -43,9 +43,6 @@ public class User {
 	@Size(max = 120)
 	private String password;
 
-	@Column(name = "tipoUsuario")
-	private Integer tipoUsuario;
-
 	@Column(name = "statusUsuario")
 	@Enumerated(value = EnumType.STRING)
 	private EnumStatus enumStatus = Ativo;
@@ -56,11 +53,10 @@ public class User {
 				inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles = new HashSet<>();
 
-	public User(String username, String email, String password, Integer tipoUsuario, EnumStatus enumStatus) {
+	public User(String username, String email, String password, EnumStatus enumStatus) {
 		this.username = username;
 		this.email = email;
 		this.password = password;
-		this.tipoUsuario = tipoUsuario;
 		this.enumStatus = enumStatus;
 	}
 
@@ -95,10 +91,6 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-	public Integer getTipoUsuario() { return tipoUsuario; }
-
-	public void setTipoUsuario(Integer userType) { this.tipoUsuario = userType; }
 
 	public EnumStatus getEnumStatus() { return enumStatus; }
 

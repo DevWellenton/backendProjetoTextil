@@ -46,7 +46,6 @@ public interface UsuarioRepresentation {
                     .userName(usuario.getUsername())
                     .email(usuario.getEmail())
                     .password(usuario.getPassword())
-                    .tipoUsuario(usuario.getTipoUsuario())
                     .enumStatus(usuario.getEnumStatus())
                     .build();
         }
@@ -67,7 +66,6 @@ public interface UsuarioRepresentation {
                     .userName(usuario.getUsername())
                     .email(usuario.getEmail())
                     .password(usuario.getPassword())
-                    .tipoUsuario(usuario.getTipoUsuario())
                     .enumStatus(usuario.getEnumStatus())
                     .build();
         }
@@ -89,7 +87,6 @@ public interface UsuarioRepresentation {
                     .userName(usuario.getUsername())
                     .email(usuario.getEmail())
                     .password(usuario.getPassword())
-                    .tipoUsuario(usuario.getTipoUsuario())
                     .enumStatus(usuario.getEnumStatus())
                     .build();
         }
