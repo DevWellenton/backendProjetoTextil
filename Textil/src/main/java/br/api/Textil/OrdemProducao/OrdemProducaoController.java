@@ -8,6 +8,7 @@ import br.api.Textil.Terceiro.TerceiroRepresentation;
 import br.api.Textil.exceptions.NotFoundException;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -94,25 +95,44 @@ public class OrdemProducaoController {
 
         return ResponseEntity.ok(detalhes);
     }
-    @GetMapping("/filtroStatus")
-    public ResponseEntity<List<OrdemProducaoRepresentation.Lista>> filtrarPorStatus(
+    @GetMapping("/filtro")
+    public ResponseEntity<List<OrdemProducaoRepresentation.Lista>> filtrarOP(
             @QuerydslPredicate(root = OrdemProducao.class) BooleanBuilder filtroURI,
-            @RequestParam("status") String status) {
-
-//      Optional<OrdemProducao> statusFind = ordemProducaoRepository.findOne(QOrdemProducao.ordemProducao.statusOrdemProducao.eq(StatusOrdemProducao.valueOf(status)));
+            @RequestParam(value = "status", required = false) String status,
+            @RequestParam(value = "lote", required = false) String lote) {
 
         filtroURI = filtroURI.and(QOrdemProducao.ordemProducao.enumStatus.eq(EnumStatus.Ativo));
 
         Pageable pageable = PageRequest.of(0, 20);
-        Page<OrdemProducao> ordemProducaoStatus = ordemProducaoService.buscarTodos(QOrdemProducao.ordemProducao.statusOrdemProducao.eq(StatusOrdemProducao.valueOf(status)).and(filtroURI), pageable);
+        Page<OrdemProducao> filtroOrdemProducao = ordemProducaoService.buscarTodos(
+                buildFiltro(status, lote).and(filtroURI), pageable);
 
         List<OrdemProducaoRepresentation.Lista> listaFinal =
-                OrdemProducaoRepresentation.Lista.from(ordemProducaoStatus.getContent());
+                OrdemProducaoRepresentation.Lista.from(filtroOrdemProducao.getContent());
 
         if (!listaFinal.isEmpty()) {
             return ResponseEntity.ok(listaFinal);
         } else {
-            throw new NotFoundException("Ordem de produção não encontrada com este status.");
+            throw new NotFoundException("Ordem de produção não encontrada com estes paramêtros.");
+        }
+    }
+    @GetMapping("/filtroLote")
+    public ResponseEntity<List<OrdemProducaoRepresentation.Lista>> filtrarPorLote(
+            @QuerydslPredicate(root = OrdemProducao.class) BooleanBuilder filtroURI,
+            @RequestParam("lote") String lote) {
+
+        filtroURI = filtroURI.and(QOrdemProducao.ordemProducao.enumStatus.eq(EnumStatus.Ativo));
+
+        Pageable pageable = PageRequest.of(0, 20);
+        Page<OrdemProducao> ordemProducaoLote = ordemProducaoService.buscarTodos(QOrdemProducao.ordemProducao.loteOp.likeIgnoreCase('%'+lote+'%').and(filtroURI), pageable);
+
+        List<OrdemProducaoRepresentation.Lista> listaFinal =
+                OrdemProducaoRepresentation.Lista.from(ordemProducaoLote.getContent());
+
+        if (!listaFinal.isEmpty()) {
+            return ResponseEntity.ok(listaFinal);
+        }else{
+            throw new NotFoundException("Ordem de produção não encontrada com este lote.");
         }
     }
     @GetMapping("/filtroTerceiro")
@@ -156,25 +176,6 @@ public class OrdemProducaoController {
             return ResponseEntity.ok(listaFinal);
         }else{
             throw new NotFoundException("Terceiro não encontrado com este razão social.");
-        }
-    }
-    @GetMapping("/filtroLote")
-    public ResponseEntity<List<OrdemProducaoRepresentation.Lista>> filtrarPorLote(
-            @QuerydslPredicate(root = OrdemProducao.class) BooleanBuilder filtroURI,
-            @RequestParam("lote") String lote) {
-
-        filtroURI = filtroURI.and(QOrdemProducao.ordemProducao.enumStatus.eq(EnumStatus.Ativo));
-
-        Pageable pageable = PageRequest.of(0, 20);
-        Page<OrdemProducao> ordemProducaoLote = ordemProducaoService.buscarTodos(QOrdemProducao.ordemProducao.loteOp.likeIgnoreCase('%'+lote+'%').and(filtroURI), pageable);
-
-        List<OrdemProducaoRepresentation.Lista> listaFinal =
-                OrdemProducaoRepresentation.Lista.from(ordemProducaoLote.getContent());
-
-        if (!listaFinal.isEmpty()) {
-            return ResponseEntity.ok(listaFinal);
-        }else{
-            throw new NotFoundException("Ordem de produção não encontrada com este lote.");
         }
     }
     @GetMapping("/filtroSituacao")
@@ -241,5 +242,20 @@ public class OrdemProducaoController {
         }else{
             throw new NotFoundException("Ordem de produção não encontrada com o parametro passado.");
         }
+    }
+    private BooleanExpression buildFiltro(
+            String status, String lote) {
+
+        BooleanExpression filtro = null;
+
+        if (status != null && !status.isEmpty()) {
+            filtro = filtro.and(QOrdemProducao.ordemProducao.statusOrdemProducao.eq(StatusOrdemProducao.valueOf(status)));
+        }
+
+        if (lote != null && !lote.isEmpty()) {
+            filtro = filtro.and(QOrdemProducao.ordemProducao.loteOp.eq(lote));
+        }
+
+        return filtro;
     }
 }
