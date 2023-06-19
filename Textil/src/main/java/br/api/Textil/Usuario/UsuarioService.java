@@ -22,7 +22,6 @@ public class UsuarioService {
         return this.usuarioRepository.save(Usuario.builder()
                 .nomeUsuario(criar.getNomeUsuario())
                 .senhaUsuario(criar.getSenhaUsuario())
-                .tipoUsuario(criar.getTipoUsuario())
                 .emailUsuario(criar.getEmailUsuario())
                 .enumStatus(criar.getEnumStatus())
                 .build());
@@ -44,7 +43,6 @@ public class UsuarioService {
                 .idUsuario(idUsuario)
                 .nomeUsuario(atualizar.getNomeUsuario())
                 .senhaUsuario(atualizar.getSenhaUsuario())
-                .tipoUsuario(atualizar.getTipoUsuario())
                 .emailUsuario(atualizar.getEmailUsuario())
                 .enumStatus(atualizar.getEnumStatus())
                 .build();

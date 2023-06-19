@@ -31,9 +31,6 @@ public interface UsuarioRepresentation {
         @NotEmpty(message = "O campo senha não pode ser vazio")
         private String senhaUsuario;
 
-        @NotNull(message = "O campo tipo não pode ser nulo")
-        private Integer tipoUsuario;
-
         @NotNull(message = "O campo email não pode ser nulo")
         @NotEmpty(message = "O campo email não pode ser vazio")
         private String emailUsuario;
@@ -46,7 +43,6 @@ public interface UsuarioRepresentation {
                     .id(usuario.getIdUsuario())
                     .nomeUsuario(usuario.getNomeUsuario())
                     .senhaUsuario(usuario.getSenhaUsuario())
-                    .tipoUsuario(usuario.getTipoUsuario())
                     .emailUsuario(usuario.getEmailUsuario())
                     .enumStatus(usuario.getEnumStatus())
                     .build();
@@ -58,7 +54,6 @@ public interface UsuarioRepresentation {
         private Long id;
         private String nomeUsuario;
         private String senhaUsuario;
-        private Integer tipoUsuario;
         private String emailUsuario;
         private EnumStatus enumStatus;
 
@@ -67,7 +62,6 @@ public interface UsuarioRepresentation {
                     .id(usuario.getIdUsuario())
                     .nomeUsuario(usuario.getNomeUsuario())
                     .senhaUsuario(usuario.getSenhaUsuario())
-                    .tipoUsuario(usuario.getTipoUsuario())
                     .emailUsuario(usuario.getEmailUsuario())
                     .enumStatus(usuario.getEnumStatus())
                     .build();
@@ -80,7 +74,6 @@ public interface UsuarioRepresentation {
         private Long id;
         private String nomeUsuario;
         private String senhaUsuario;
-        private Integer tipoUsuario;
         private String emailUsuario;
         private EnumStatus enumStatus;
 
@@ -89,7 +82,6 @@ public interface UsuarioRepresentation {
                     .id(usuario.getIdUsuario())
                     .nomeUsuario(usuario.getNomeUsuario())
                     .senhaUsuario(usuario.getSenhaUsuario())
-                    .tipoUsuario(usuario.getTipoUsuario())
                     .emailUsuario(usuario.getEmailUsuario())
                     .enumStatus(usuario.getEnumStatus())
                     .build();
