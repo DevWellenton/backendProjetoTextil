@@ -29,9 +29,6 @@ public class Usuario {
     @Column(name = "senhaUsuario")
     private String senhaUsuario;
 
-    @Column(name = "tipoUsuario")
-    private Integer tipoUsuario;
-
     @Size(max = 100)
     @Column(name = "emailUsuario")
     private String emailUsuario;
