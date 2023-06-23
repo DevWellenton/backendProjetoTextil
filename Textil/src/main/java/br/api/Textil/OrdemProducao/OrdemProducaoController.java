@@ -79,6 +79,18 @@ public class OrdemProducaoController {
 
         return ResponseEntity.ok(listaFinal);
     }
+    @GetMapping("/{idOrdemProducao}")
+    public ResponseEntity<OrdemProducaoRepresentation.Detalhes> buscarUmaOrdemProducao(
+            @PathVariable Long idOrdemProducao) {
+
+        OrdemProducao ordemProducao = this.ordemProducaoService.buscarUmaOrdemProducao(idOrdemProducao);
+
+        OrdemProducaoRepresentation.Detalhes detalhes =
+                OrdemProducaoRepresentation.Detalhes
+                        .from(ordemProducao);
+
+        return ResponseEntity.ok(detalhes);
+    }
     @GetMapping("/filtro")
     public ResponseEntity<List<OrdemProducaoRepresentation.Lista>> filtrarOP(
             @QuerydslPredicate(root = OrdemProducao.class) BooleanBuilder filtroURI,

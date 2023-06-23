@@ -34,9 +34,6 @@ public interface UsuarioRepresentation {
         @NotEmpty(message = "O campo senha não pode ser vazio")
         private String password;
 
-        @NotNull(message = "O campo tipo não pode ser nulo")
-        private Integer tipoUsuario;
-
         @NotNull(message = "O campo status não pode ser nulo")
         private EnumStatus enumStatus;
 

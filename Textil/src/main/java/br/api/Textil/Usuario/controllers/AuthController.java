@@ -17,6 +17,8 @@ import br.api.Textil.Usuario.repository.RoleRepository;
 import br.api.Textil.Usuario.repository.UserRepository;
 import br.api.Textil.Usuario.security.jwt.JwtUtils;
 import br.api.Textil.Usuario.security.services.UserDetailsImpl;
+import net.bytebuddy.asm.Advice;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -31,6 +33,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import static java.lang.Character.isUpperCase;
+import static org.apache.coyote.http11.Constants.Z;
+import static org.apache.coyote.http11.Constants.a;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -80,6 +86,52 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
+
+        String caracterEspecial = "?!@#$%&*<>:;°|'()-_+=§";
+        String numero = "1234567890";
+        String senha;
+        senha = signUpRequest.getPassword().trim();
+        int cont=0;
+
+        for (int i = 0; i < senha.length(); i++) {
+            for (int j = 0; j < caracterEspecial.length(); j++) {
+                char letra=senha.charAt(i);
+                char letracaracterEspecial=caracterEspecial.charAt(j);
+                if (letra==letracaracterEspecial){
+                    cont++;
+                    System.out.println("1cont= "+cont++);
+                    break;
+                }
+            }
+        }
+
+        for (int i = 0; i < senha.length(); i++) {
+            for (int j = 0; j < numero.length(); j++) {
+                char letra=senha.charAt(i);
+                char charNumero=numero.charAt(j);
+                if (letra==charNumero){
+                    cont++;
+                    System.out.println("2cont= "+cont++);
+                    break;
+                }
+            }
+        }
+
+        for (int i = 0; i < senha.length(); i++) {
+            char letra=senha.charAt(i);
+            if (isUpperCase(letra)){
+                cont++;
+                System.out.println("3cont= "+cont++);
+                break;
+            }
+        }
+
+        if (cont<3){
+            return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Error: Password deve conter um caracter especial, uma letra maiúscula e um número!"));
+        }
+
         if (userRepository.existsByUsername(signUpRequest.getUsername())) {
             return ResponseEntity
                     .badRequest()
