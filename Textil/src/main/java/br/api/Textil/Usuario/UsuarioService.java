@@ -1,5 +1,6 @@
 package br.api.Textil.Usuario;
 
+import br.api.Textil.Usuario.models.User;
 import br.api.Textil.exceptions.NotFoundException;
 import com.querydsl.core.types.Predicate;
 import lombok.AllArgsConstructor;
@@ -17,45 +18,45 @@ public class UsuarioService {
 
     private UsuarioRepository usuarioRepository;
 
-    public Usuario criarUsuario(UsuarioRepresentation.CriarOuAtualizar criar){
+    public User criarUsuario(UsuarioRepresentation.CriarOuAtualizar criar){
 
-        return this.usuarioRepository.save(Usuario.builder()
-                .nomeUsuario(criar.getNomeUsuario())
-                .senhaUsuario(criar.getSenhaUsuario())
-                .emailUsuario(criar.getEmailUsuario())
+        return this.usuarioRepository.save(User.builder()
+                .username(criar.getUserName())
+                .email(criar.getEmail())
+                .password(criar.getPassword())
                 .enumStatus(criar.getEnumStatus())
                 .build());
     }
-    public Page<Usuario> buscarTodos(Pageable pageable) {
+    public Page<User> buscarTodos(Pageable pageable) {
         return this.usuarioRepository.findAll(pageable);
     }
 
-    public Page<Usuario> buscarTodos(Predicate filtroURI, Pageable pageable) {
+    public Page<User> buscarTodos(Predicate filtroURI, Pageable pageable) {
         return this.usuarioRepository.findAll(filtroURI, pageable);
     }
-    public Usuario atualizar(
-            Long idUsuario,
+    public User atualizar(
+            Long id,
             UsuarioRepresentation.CriarOuAtualizar atualizar) {
 
-        this.getUsuario(idUsuario);
+        this.getUsuario(id);
 
-        Usuario usuarioParaAtualizar = Usuario.builder()
-                .idUsuario(idUsuario)
-                .nomeUsuario(atualizar.getNomeUsuario())
-                .senhaUsuario(atualizar.getSenhaUsuario())
-                .emailUsuario(atualizar.getEmailUsuario())
+        User usuarioParaAtualizar = User.builder()
+                .id(id)
+                .username(atualizar.getUserName())
+                .email(atualizar.getEmail())
+                .password(atualizar.getPassword())
                 .enumStatus(atualizar.getEnumStatus())
                 .build();
 
         return this.usuarioRepository.save(usuarioParaAtualizar);
     }
-    public Usuario buscarUmUsuario (Long idUsuario){
-        return this.getUsuario(idUsuario);
+    public User buscarUmUsuario (Long id){
+        return this.getUsuario(id);
     }
 
-    private Usuario getUsuario (Long idUsuario){
-        Optional<Usuario> usuarioAtual =
-                this.usuarioRepository.findById(idUsuario);
+    private User getUsuario (Long id){
+        Optional<User> usuarioAtual =
+                this.usuarioRepository.findById(id);
 
         if (usuarioAtual.isPresent()) {
             return usuarioAtual.get();

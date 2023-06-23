@@ -1,8 +1,10 @@
 package br.api.Textil.OrdemProducao;
 
 import br.api.Textil.Enum.EnumStatus;
+import br.api.Textil.Terceiro.QTerceiro;
 import br.api.Textil.Terceiro.Terceiro;
 import br.api.Textil.Terceiro.TerceiroRepository;
+import br.api.Textil.Terceiro.TerceiroRepresentation;
 import br.api.Textil.exceptions.NotFoundException;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
@@ -76,6 +78,18 @@ public class OrdemProducaoController {
                 OrdemProducaoRepresentation.Lista.from(ordemProducaoList.getContent());
 
         return ResponseEntity.ok(listaFinal);
+    }
+    @GetMapping("/{idOrdemProducao}")
+    public ResponseEntity<OrdemProducaoRepresentation.Detalhes> buscarUmaOrdemProducao(
+            @PathVariable Long idOrdemProducao) {
+
+        OrdemProducao ordemProducao = this.ordemProducaoService.buscarUmaOrdemProducao(idOrdemProducao);
+
+        OrdemProducaoRepresentation.Detalhes detalhes =
+                OrdemProducaoRepresentation.Detalhes
+                        .from(ordemProducao);
+
+        return ResponseEntity.ok(detalhes);
     }
     @GetMapping("/filtro")
     public ResponseEntity<List<OrdemProducaoRepresentation.Lista>> filtrarOP(

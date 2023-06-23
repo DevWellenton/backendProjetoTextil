@@ -1,6 +1,8 @@
 package br.api.Textil.Usuario;
 
 import br.api.Textil.Enum.EnumStatus;
+import br.api.Textil.Usuario.models.QUser;
+import br.api.Textil.Usuario.models.User;
 import br.api.Textil.exceptions.NotFoundException;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
@@ -28,7 +30,7 @@ public class UsuarioController {
     public ResponseEntity<UsuarioRepresentation.Detalhes> createUsuario(
             @RequestBody @Valid UsuarioRepresentation.CriarOuAtualizar criar){
 
-        Usuario usuario = this.usuarioService.criarUsuario(criar);
+        User usuario = this.usuarioService.criarUsuario(criar);
 
         UsuarioRepresentation.Detalhes detalhes =
                 UsuarioRepresentation.Detalhes.from(usuario);
@@ -40,7 +42,7 @@ public class UsuarioController {
             @PathVariable Long idUsuario,
             @RequestBody UsuarioRepresentation.CriarOuAtualizar atualizar) {
 
-        Usuario usuarioAtualizado =
+        User usuarioAtualizado =
                 this.usuarioService.atualizar(idUsuario, atualizar);
 
         UsuarioRepresentation.Detalhes detalhes =
@@ -51,16 +53,16 @@ public class UsuarioController {
     }
     @GetMapping("/")
     public ResponseEntity<List<UsuarioRepresentation.Lista>> buscarUsuario(
-            @QuerydslPredicate(root = Usuario.class) BooleanBuilder filtroURI,
+            @QuerydslPredicate(root = User.class) BooleanBuilder filtroURI,
             @RequestParam(name="tamanhoPagina", defaultValue = "30") int tamanhoPagina,
             @RequestParam(name = "paginaSelecionada", defaultValue = "0") int paginaSelecionada) {
 
 
         Pageable pageable = PageRequest.of(paginaSelecionada, tamanhoPagina);
 
-        filtroURI = filtroURI.and(QUsuario.usuario.enumStatus.eq(EnumStatus.Ativo));
+        filtroURI = filtroURI.and(QUser.user.enumStatus.eq(EnumStatus.Ativo));
 
-        Page<Usuario> usuarioList = Objects.isNull(filtroURI) ?
+        Page<User> usuarioList = Objects.isNull(filtroURI) ?
                 this.usuarioService.buscarTodos(pageable) :
                 this.usuarioService.buscarTodos(filtroURI, pageable);
 
@@ -73,7 +75,11 @@ public class UsuarioController {
     public ResponseEntity<UsuarioRepresentation.Detalhes> buscarUmUsuario(
             @PathVariable Long idUsuario) {
 
-        Usuario usuario = this.usuarioService.buscarUmUsuario(idUsuario);
+        User usuario = this.usuarioService.buscarUmUsuario(idUsuario);
+
+        if (usuario.getEnumStatus() != EnumStatus.Ativo){
+            throw new NotFoundException("Usuario não encontrado.");
+        }
 
         if (usuario.getEnumStatus() != EnumStatus.Ativo){
             throw new NotFoundException("Usuario não encontrado.");
@@ -87,11 +93,11 @@ public class UsuarioController {
     }
     @GetMapping("/filtroStatus")
     public ResponseEntity<List<UsuarioRepresentation.Lista>> filtrarPorStatus(
-            @QuerydslPredicate(root = Usuario.class) Predicate filtroURI,
+            @QuerydslPredicate(root = User.class) Predicate filtroURI,
             @RequestParam("StatusUsuario") String status) {
 
         Pageable pageable = PageRequest.of(0, 20);
-        Page<Usuario> statusUsuario = usuarioService.buscarTodos(QUsuario.usuario.enumStatus.eq(EnumStatus.valueOf(String.valueOf(status))).and(filtroURI), pageable);
+        Page<User> statusUsuario = usuarioService.buscarTodos(QUser.user.enumStatus.eq(EnumStatus.valueOf(String.valueOf(status))).and(filtroURI), pageable);
 
         List<UsuarioRepresentation.Lista> listaFinal =
                 UsuarioRepresentation.Lista.from(statusUsuario.getContent());
