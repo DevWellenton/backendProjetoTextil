@@ -89,29 +89,28 @@ public class AuthController {
 
         String caracterEspecial = "?!@#$%&*<>:;°|'()-_+=§";
         String numero = "1234567890";
-        String senha;
-        senha = signUpRequest.getPassword().trim();
-        int cont=0;
+        String senha = signUpRequest.getPassword().trim();
+        boolean temCaracterEspecial = false;
+        boolean temNumero = false;
+        boolean temLetraMaiuscula = false;
 
         for (int i = 0; i < senha.length(); i++) {
+            char letra=senha.charAt(i);
             for (int j = 0; j < caracterEspecial.length(); j++) {
-                char letra=senha.charAt(i);
                 char letracaracterEspecial=caracterEspecial.charAt(j);
                 if (letra==letracaracterEspecial){
-                    cont++;
-                    System.out.println("1cont= "+cont++);
+                    temCaracterEspecial = true;
                     break;
                 }
             }
         }
 
         for (int i = 0; i < senha.length(); i++) {
+            char letra=senha.charAt(i);
             for (int j = 0; j < numero.length(); j++) {
-                char letra=senha.charAt(i);
                 char charNumero=numero.charAt(j);
                 if (letra==charNumero){
-                    cont++;
-                    System.out.println("2cont= "+cont++);
+                    temNumero = true;
                     break;
                 }
             }
@@ -120,13 +119,12 @@ public class AuthController {
         for (int i = 0; i < senha.length(); i++) {
             char letra=senha.charAt(i);
             if (isUpperCase(letra)){
-                cont++;
-                System.out.println("3cont= "+cont++);
+                temLetraMaiuscula = true;
                 break;
             }
         }
 
-        if (cont<3){
+        if (!temCaracterEspecial || !temNumero || !temLetraMaiuscula){
             return ResponseEntity
                     .badRequest()
                     .body(new MessageResponse("Error: Password deve conter um caracter especial, uma letra maiúscula e um número!"));
