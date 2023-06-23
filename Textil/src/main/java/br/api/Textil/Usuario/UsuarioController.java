@@ -81,6 +81,10 @@ public class UsuarioController {
             throw new NotFoundException("Usuario não encontrado.");
         }
 
+        if (usuario.getEnumStatus() != EnumStatus.Ativo){
+            throw new NotFoundException("Usuario não encontrado.");
+        }
+
         UsuarioRepresentation.Detalhes detalhes =
                 UsuarioRepresentation.Detalhes
                         .from(usuario);

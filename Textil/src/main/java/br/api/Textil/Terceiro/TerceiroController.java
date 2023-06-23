@@ -1,12 +1,8 @@
 package br.api.Textil.Terceiro;
 
 import br.api.Textil.Enum.EnumStatus;
-import br.api.Textil.OrdemProducao.OrdemProducao;
-import br.api.Textil.OrdemProducao.OrdemProducaoRepresentation;
-import br.api.Textil.OrdemProducao.QOrdemProducao;
 import br.api.Textil.exceptions.NotFoundException;
 import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.types.Expression;
 import com.querydsl.core.types.Predicate;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -20,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("api/terceiro")
@@ -29,8 +24,6 @@ import java.util.Optional;
 public class TerceiroController {
 
     private TerceiroService terceiroService;
-
-    private TerceiroRepository terceiroRepository;
 
     @PostMapping("/")
     public ResponseEntity<TerceiroRepresentation.Detalhes> createTerceiro(

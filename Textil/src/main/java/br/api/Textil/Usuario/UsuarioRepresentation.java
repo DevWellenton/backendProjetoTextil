@@ -14,6 +14,8 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static br.api.Textil.Enum.EnumStatus.Ativo;
+
 public interface UsuarioRepresentation {
 
     @Data
@@ -35,7 +37,7 @@ public interface UsuarioRepresentation {
         private String password;
 
         @NotNull(message = "O campo status não pode ser nulo")
-        private EnumStatus enumStatus;
+        private EnumStatus enumStatus = Ativo;
 
         public static UsuarioRepresentation.Detalhes from(User usuario) {
             return UsuarioRepresentation.Detalhes.builder()
