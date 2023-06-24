@@ -21,7 +21,7 @@ public class UsuarioService {
     public User criarUsuario(UsuarioRepresentation.CriarOuAtualizar criar){
 
         return this.usuarioRepository.save(User.builder()
-                .username(criar.getUserName())
+                .username(criar.getUsername())
                 .email(criar.getEmail())
                 .password(criar.getPassword())
                 .enumStatus(criar.getEnumStatus())
@@ -42,7 +42,7 @@ public class UsuarioService {
 
         User usuarioParaAtualizar = User.builder()
                 .id(id)
-                .username(atualizar.getUserName())
+                .username(atualizar.getUsername())
                 .email(atualizar.getEmail())
                 .password(atualizar.getPassword())
                 .enumStatus(atualizar.getEnumStatus())
