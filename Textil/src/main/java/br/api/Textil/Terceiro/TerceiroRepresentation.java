@@ -13,6 +13,8 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static br.api.Textil.Enum.EnumStatus.Ativo;
+
 public interface TerceiroRepresentation {
 
     @Data
@@ -56,7 +58,7 @@ public interface TerceiroRepresentation {
 
         public static Detalhes from(Terceiro terceiro) {
             return Detalhes.builder()
-                    .id(terceiro.getIdTerceiro())
+                    .idTerceiro(terceiro.getIdTerceiro())
                     .razaoSocial(terceiro.getRazaoSocial())
                     .cnpjTerceiro(terceiro.getCnpjTerceiro())
                     .enderecoTerceiro(terceiro.getEnderecoTerceiro())
@@ -73,7 +75,7 @@ public interface TerceiroRepresentation {
     @Data
     @Builder
     class Detalhes {
-        private Long id;
+        private Long idTerceiro;
         private String razaoSocial;
         private String cnpjTerceiro;
         private String enderecoTerceiro;
@@ -87,7 +89,7 @@ public interface TerceiroRepresentation {
 
         public static TerceiroRepresentation.Detalhes from(Terceiro terceiro){
             return Detalhes.builder()
-                    .id(terceiro.getIdTerceiro())
+                    .idTerceiro(terceiro.getIdTerceiro())
                     .razaoSocial(terceiro.getRazaoSocial())
                     .cnpjTerceiro(terceiro.getCnpjTerceiro())
                     .enderecoTerceiro(terceiro.getEnderecoTerceiro())
@@ -105,7 +107,7 @@ public interface TerceiroRepresentation {
     @Builder
     @JsonInclude(JsonInclude.Include.NON_NULL)
     class Lista {
-        private Long id;
+        private Long idTerceiro;
         private String razaoSocial;
         private String cnpjTerceiro;
         private String enderecoTerceiro;
@@ -119,7 +121,7 @@ public interface TerceiroRepresentation {
 
         private static Lista from(Terceiro terceiro) {
             return Lista.builder()
-                    .id(terceiro.getIdTerceiro())
+                    .idTerceiro(terceiro.getIdTerceiro())
                     .razaoSocial(terceiro.getRazaoSocial())
                     .cnpjTerceiro(terceiro.getCnpjTerceiro())
                     .enderecoTerceiro(terceiro.getEnderecoTerceiro())

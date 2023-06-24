@@ -26,7 +26,7 @@ public interface UsuarioRepresentation {
 
         @NotNull(message = "O campo nome não pode ser nulo")
         @NotEmpty(message = "O campo nome não pode ser vazio")
-        private String userName;
+        private String username;
 
         @NotNull(message = "O campo email não pode ser nulo")
         @NotEmpty(message = "O campo email não pode ser vazio")
@@ -42,7 +42,7 @@ public interface UsuarioRepresentation {
         public static UsuarioRepresentation.Detalhes from(User usuario) {
             return UsuarioRepresentation.Detalhes.builder()
                     .id(usuario.getId())
-                    .userName(usuario.getUsername())
+                    .username(usuario.getUsername())
                     .email(usuario.getEmail())
                     .password(usuario.getPassword())
                     .enumStatus(usuario.getEnumStatus())
@@ -53,7 +53,7 @@ public interface UsuarioRepresentation {
     @Builder
     class Detalhes {
         private Long id;
-        private String userName;
+        private String username;
         private String email;
         private String password;
         private Integer tipoUsuario;
@@ -62,7 +62,7 @@ public interface UsuarioRepresentation {
         public static UsuarioRepresentation.Detalhes from(User usuario) {
             return Detalhes.builder()
                     .id(usuario.getId())
-                    .userName(usuario.getUsername())
+                    .username(usuario.getUsername())
                     .email(usuario.getEmail())
                     .password(usuario.getPassword())
                     .enumStatus(usuario.getEnumStatus())
@@ -74,7 +74,7 @@ public interface UsuarioRepresentation {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     class Lista {
         private Long id;
-        private String userName;
+        private String username;
         private String email;
         private String password;
         private Integer tipoUsuario;
@@ -83,7 +83,7 @@ public interface UsuarioRepresentation {
         private static Lista from(User usuario) {
             return Lista.builder()
                     .id(usuario.getId())
-                    .userName(usuario.getUsername())
+                    .username(usuario.getUsername())
                     .email(usuario.getEmail())
                     .password(usuario.getPassword())
                     .enumStatus(usuario.getEnumStatus())
