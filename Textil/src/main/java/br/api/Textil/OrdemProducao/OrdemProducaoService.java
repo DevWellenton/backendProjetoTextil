@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
 
@@ -59,6 +60,32 @@ public class OrdemProducaoService {
 
         return this.ordemProducaoRepository.save(ordemProducaoParaAtualizar);
     }
+//    public OrdemProducao atualizar(
+//            Long idOrdemProducao,
+//            OrdemProducaoRepresentation.CriarOuAtualizar atualizar) {
+//
+//        OrdemProducao ordemProducaoExistente = this.getOrdemProducao(idOrdemProducao);
+//
+//        if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
+//                .anyMatch(auth -> auth.getAuthority().equals("ROLE_ADMIN"))) {
+//            // Usuário é ADMIN, pode atualizar todos os campos da ordem de produção
+//            ordemProducaoExistente.setDataInicialOp(atualizar.getDataInicialOp());
+//            ordemProducaoExistente.setDataFinalOp(atualizar.getDataFinalOp());
+//            ordemProducaoExistente.setStatusOrdemProducao(atualizar.getStatusOrdemProducao());
+//            ordemProducaoExistente.setQtdePecasOp(atualizar.getQtdePecasOp());
+//            ordemProducaoExistente.setLoteOp(atualizar.getLoteOp());
+//            ordemProducaoExistente.setObsOp(atualizar.getObsOp());
+//            ordemProducaoExistente.setEnumStatus(atualizar.getEnumStatus());
+//            ordemProducaoExistente.setTerceiro(atualizar.getTerceiro());
+//            ordemProducaoExistente.setUsuario(atualizar.getUsuario());
+//        } else {
+//            // Usuário não é ADMIN, pode apenas atualizar o status da ordem de produção
+//            ordemProducaoExistente.setStatusOrdemProducao(atualizar.getStatusOrdemProducao());
+//        }
+//
+//        return this.ordemProducaoRepository.save(ordemProducaoExistente);
+//    }
+
     public OrdemProducao buscarUmaOrdemProducao (Long idOrdemProducao){
         return this.getOrdemProducao(idOrdemProducao);
     }

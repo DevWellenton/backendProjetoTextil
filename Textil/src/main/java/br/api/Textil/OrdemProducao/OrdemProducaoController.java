@@ -1,28 +1,23 @@
 package br.api.Textil.OrdemProducao;
 
 import br.api.Textil.Enum.EnumStatus;
-import br.api.Textil.Terceiro.QTerceiro;
-import br.api.Textil.Terceiro.Terceiro;
 import br.api.Textil.Terceiro.TerceiroRepository;
-import br.api.Textil.Terceiro.TerceiroRepresentation;
 import br.api.Textil.exceptions.NotFoundException;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
-import com.querydsl.core.types.dsl.BooleanExpression;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-
-
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("api/ordemProducao")
@@ -35,6 +30,7 @@ public class OrdemProducaoController {
     private TerceiroRepository terceiroRepository;
 
     @PostMapping()
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<OrdemProducaoRepresentation.Detalhes> createOrdemProducao(
             @RequestBody @Valid OrdemProducaoRepresentation.CriarOuAtualizar criar){
 
