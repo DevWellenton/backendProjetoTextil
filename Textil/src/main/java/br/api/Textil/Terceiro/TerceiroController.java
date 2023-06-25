@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -26,6 +27,7 @@ public class TerceiroController {
     private TerceiroService terceiroService;
 
     @PostMapping("/")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<TerceiroRepresentation.Detalhes> createTerceiro(
             @RequestBody @Valid TerceiroRepresentation.CriarOuAtualizar criar){
 
@@ -37,6 +39,7 @@ public class TerceiroController {
         return ResponseEntity.ok(detalhes);
     }
     @PutMapping("/{idTerceiro}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<TerceiroRepresentation.Detalhes> atualizarTerceiro(
             @PathVariable Long idTerceiro,
             @RequestBody TerceiroRepresentation.CriarOuAtualizar atualizar) {
@@ -51,6 +54,7 @@ public class TerceiroController {
         return ResponseEntity.ok(detalhes);
     }
     @GetMapping()
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<TerceiroRepresentation.Lista>> buscarTerceiro(
             @QuerydslPredicate(root = Terceiro.class) BooleanBuilder filtroURI,
             @RequestParam(name="tamanhoPagina", defaultValue = "30") int tamanhoPagina,
@@ -71,6 +75,7 @@ public class TerceiroController {
         return ResponseEntity.ok(listaFinal);
     }
     @GetMapping("{idTerceiro}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<TerceiroRepresentation.Detalhes> buscarUmTerceiro(
             @PathVariable Long idTerceiro) {
 
@@ -87,6 +92,7 @@ public class TerceiroController {
         return ResponseEntity.ok(detalhes);
     }
     @GetMapping("/filtroNome")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<TerceiroRepresentation.Lista>> filtrarPorNome(
             @QuerydslPredicate(root = Terceiro.class) BooleanBuilder filtroURI,
             @RequestParam("NomeTerceiro") String nome) {
@@ -108,6 +114,7 @@ public class TerceiroController {
         }
     }
     @GetMapping("/filtroStatus")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<TerceiroRepresentation.Lista>> filtrarPorStatus(
             @QuerydslPredicate(root = Terceiro.class) Predicate filtroURI,
             @RequestParam("StatusTerceiro") String status) {

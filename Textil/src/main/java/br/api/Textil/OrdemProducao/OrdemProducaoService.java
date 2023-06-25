@@ -39,52 +39,52 @@ public class OrdemProducaoService {
         return this.ordemProducaoRepository.findAll(filtroURI, pageable);
     }
 
-    public OrdemProducao atualizar(
-            Long idOrdemProducao,
-            OrdemProducaoRepresentation.CriarOuAtualizar atualizar) {
-
-        this.getOrdemProducao(idOrdemProducao);
-
-        OrdemProducao ordemProducaoParaAtualizar = OrdemProducao.builder()
-                .idOrdemProducao(idOrdemProducao)
-                .dataInicialOp(atualizar.getDataInicialOp())
-                .dataFinalOp(atualizar.getDataFinalOp())
-                .statusOrdemProducao(atualizar.getStatusOrdemProducao())
-                .qtdePecasOp(atualizar.getQtdePecasOp())
-                .loteOp(atualizar.getLoteOp())
-                .obsOp(atualizar.getObsOp())
-                .enumStatus(atualizar.getEnumStatus())
-                .terceiro(atualizar.getTerceiro())
-                .usuario(atualizar.getUsuario())
-                .build();
-
-        return this.ordemProducaoRepository.save(ordemProducaoParaAtualizar);
-    }
 //    public OrdemProducao atualizar(
 //            Long idOrdemProducao,
 //            OrdemProducaoRepresentation.CriarOuAtualizar atualizar) {
 //
-//        OrdemProducao ordemProducaoExistente = this.getOrdemProducao(idOrdemProducao);
+//        this.getOrdemProducao(idOrdemProducao);
 //
-//        if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
-//                .anyMatch(auth -> auth.getAuthority().equals("ROLE_ADMIN"))) {
-//            // Usuário é ADMIN, pode atualizar todos os campos da ordem de produção
-//            ordemProducaoExistente.setDataInicialOp(atualizar.getDataInicialOp());
-//            ordemProducaoExistente.setDataFinalOp(atualizar.getDataFinalOp());
-//            ordemProducaoExistente.setStatusOrdemProducao(atualizar.getStatusOrdemProducao());
-//            ordemProducaoExistente.setQtdePecasOp(atualizar.getQtdePecasOp());
-//            ordemProducaoExistente.setLoteOp(atualizar.getLoteOp());
-//            ordemProducaoExistente.setObsOp(atualizar.getObsOp());
-//            ordemProducaoExistente.setEnumStatus(atualizar.getEnumStatus());
-//            ordemProducaoExistente.setTerceiro(atualizar.getTerceiro());
-//            ordemProducaoExistente.setUsuario(atualizar.getUsuario());
-//        } else {
-//            // Usuário não é ADMIN, pode apenas atualizar o status da ordem de produção
-//            ordemProducaoExistente.setStatusOrdemProducao(atualizar.getStatusOrdemProducao());
-//        }
+//        OrdemProducao ordemProducaoParaAtualizar = OrdemProducao.builder()
+//                .idOrdemProducao(idOrdemProducao)
+//                .dataInicialOp(atualizar.getDataInicialOp())
+//                .dataFinalOp(atualizar.getDataFinalOp())
+//                .statusOrdemProducao(atualizar.getStatusOrdemProducao())
+//                .qtdePecasOp(atualizar.getQtdePecasOp())
+//                .loteOp(atualizar.getLoteOp())
+//                .obsOp(atualizar.getObsOp())
+//                .enumStatus(atualizar.getEnumStatus())
+//                .terceiro(atualizar.getTerceiro())
+//                .usuario(atualizar.getUsuario())
+//                .build();
 //
-//        return this.ordemProducaoRepository.save(ordemProducaoExistente);
+//        return this.ordemProducaoRepository.save(ordemProducaoParaAtualizar);
 //    }
+    public OrdemProducao atualizar(
+            Long idOrdemProducao,
+            OrdemProducaoRepresentation.CriarOuAtualizar atualizar) {
+
+        OrdemProducao ordemProducaoExistente = this.getOrdemProducao(idOrdemProducao);
+
+        if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
+                .anyMatch(auth -> auth.getAuthority().equals("ROLE_ADMIN"))) {
+            // Usuário é ADMIN, pode atualizar todos os campos da ordem de produção
+            ordemProducaoExistente.setDataInicialOp(atualizar.getDataInicialOp());
+            ordemProducaoExistente.setDataFinalOp(atualizar.getDataFinalOp());
+            ordemProducaoExistente.setStatusOrdemProducao(atualizar.getStatusOrdemProducao());
+            ordemProducaoExistente.setQtdePecasOp(atualizar.getQtdePecasOp());
+            ordemProducaoExistente.setLoteOp(atualizar.getLoteOp());
+            ordemProducaoExistente.setObsOp(atualizar.getObsOp());
+            ordemProducaoExistente.setEnumStatus(atualizar.getEnumStatus());
+            ordemProducaoExistente.setTerceiro(atualizar.getTerceiro());
+            ordemProducaoExistente.setUsuario(atualizar.getUsuario());
+        } else {
+            // Usuário não é ADMIN, pode apenas atualizar o status da ordem de produção
+            ordemProducaoExistente.setStatusOrdemProducao(atualizar.getStatusOrdemProducao());
+        }
+
+        return this.ordemProducaoRepository.save(ordemProducaoExistente);
+    }
 
     public OrdemProducao buscarUmaOrdemProducao (Long idOrdemProducao){
         return this.getOrdemProducao(idOrdemProducao);

@@ -56,7 +56,6 @@ public interface UsuarioRepresentation {
         private String username;
         private String email;
         private String password;
-        private Integer tipoUsuario;
         private EnumStatus enumStatus;
 
         public static UsuarioRepresentation.Detalhes from(User usuario) {
@@ -77,7 +76,6 @@ public interface UsuarioRepresentation {
         private String username;
         private String email;
         private String password;
-        private Integer tipoUsuario;
         private EnumStatus enumStatus;
 
         private static Lista from(User usuario) {
