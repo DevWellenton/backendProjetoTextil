@@ -12,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -26,6 +27,7 @@ public class UsuarioController {
 
     private UsuarioService usuarioService;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/")
     public ResponseEntity<UsuarioRepresentation.Detalhes> createUsuario(
             @RequestBody @Valid UsuarioRepresentation.CriarOuAtualizar criar){
@@ -37,6 +39,7 @@ public class UsuarioController {
 
         return ResponseEntity.ok(detalhes);
     }
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/{idUsuario}")
     public ResponseEntity<UsuarioRepresentation.Detalhes> atualizarUsuario(
             @PathVariable Long idUsuario,
@@ -51,6 +54,7 @@ public class UsuarioController {
 
         return ResponseEntity.ok(detalhes);
     }
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/")
     public ResponseEntity<List<UsuarioRepresentation.Lista>> buscarUsuario(
             @QuerydslPredicate(root = User.class) BooleanBuilder filtroURI,
@@ -71,6 +75,7 @@ public class UsuarioController {
 
         return ResponseEntity.ok(listaFinal);
     }
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/{idUsuario}")
     public ResponseEntity<UsuarioRepresentation.Detalhes> buscarUmUsuario(
             @PathVariable Long idUsuario) {
@@ -91,6 +96,7 @@ public class UsuarioController {
 
         return ResponseEntity.ok(detalhes);
     }
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/filtroStatus")
     public ResponseEntity<List<UsuarioRepresentation.Lista>> filtrarPorStatus(
             @QuerydslPredicate(root = User.class) Predicate filtroURI,
