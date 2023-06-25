@@ -26,7 +26,7 @@ public interface UsuarioRepresentation {
 
         @NotNull(message = "O campo nome não pode ser nulo")
         @NotEmpty(message = "O campo nome não pode ser vazio")
-        private String userName;
+        private String username;
 
         @NotNull(message = "O campo email não pode ser nulo")
         @NotEmpty(message = "O campo email não pode ser vazio")

@@ -13,6 +13,8 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static br.api.Textil.Enum.EnumStatus.Ativo;
+
 public interface TerceiroRepresentation {
 
     @Data
