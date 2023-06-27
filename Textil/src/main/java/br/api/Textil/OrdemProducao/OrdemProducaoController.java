@@ -177,7 +177,7 @@ public class OrdemProducaoController {
         if ((dataInicialFinal != null && !dataFinalFinal.isEmpty())) {
             LocalDateTime dataInicialFinalConvert = LocalDateTime.parse(dataInicialFinal);
             LocalDateTime dataFinalFinalConvert = LocalDateTime.parse(dataFinalFinal);
-            filtro = filtro.and(QOrdemProducao.ordemProducao.dataInicialOp.between(dataInicialFinalConvert, dataFinalFinalConvert));
+            filtro = filtro.and(QOrdemProducao.ordemProducao.dataFinalOp.between(dataInicialFinalConvert, dataFinalFinalConvert));
             cont++;
         }
 
