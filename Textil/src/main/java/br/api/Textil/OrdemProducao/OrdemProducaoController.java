@@ -136,11 +136,7 @@ public class OrdemProducaoController {
         List<OrdemProducaoRepresentation.Lista> listaFinal =
                 OrdemProducaoRepresentation.Lista.from(filtroOrdemProducao.getContent());
 
-        if (!listaFinal.isEmpty()) {
-            return ResponseEntity.ok(listaFinal);
-        } else {
-            throw new NotFoundException("Ordem de produção não encontrada com estes paramêtros.");
-        }
+        return ResponseEntity.ok(listaFinal);
     }
     private BooleanBuilder buildFiltro(
             String status, String lote, String dataInicialInicio, String dataFinalInicio, String dataInicialFinal, String dataFinalFinal,
