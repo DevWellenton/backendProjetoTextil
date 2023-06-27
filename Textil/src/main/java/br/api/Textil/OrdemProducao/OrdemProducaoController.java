@@ -117,7 +117,16 @@ public class OrdemProducaoController {
             @RequestParam(value = "opPorTerceiro", required = false) Long terceiro,
             @RequestParam(value = "opPorIdOp", required = false) Long idOp) {
 
+        SecurityContext context = SecurityContextHolder.getContext();
+        User usuarioLogado = this.userRepository.findByUsername(context.getAuthentication().getName()).orElse(null);
+
         filtroURI = filtroURI.and(QOrdemProducao.ordemProducao.enumStatus.eq(EnumStatus.Ativo));
+
+        boolean role_admin = usuarioLogado.getRoles().stream().filter(role -> role.getName().equals(ERole.valueOf("ROLE_ADMIN"))).count() > 0;
+
+        if(usuarioLogado != null && !role_admin){
+            filtroURI = filtroURI.and(QOrdemProducao.ordemProducao.terceiro.usuario().id.eq(usuarioLogado.getId()));
+        }
 
         Pageable pageable = PageRequest.of(0, 20);
 
