@@ -2,6 +2,10 @@ package br.api.Textil.OrdemProducao;
 
 import br.api.Textil.Enum.EnumStatus;
 import br.api.Textil.Terceiro.TerceiroRepository;
+import br.api.Textil.Usuario.models.ERole;
+import br.api.Textil.Usuario.models.Role;
+import br.api.Textil.Usuario.models.User;
+import br.api.Textil.Usuario.repository.UserRepository;
 import br.api.Textil.exceptions.NotFoundException;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
@@ -12,11 +16,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.querydsl.binding.QuerydslPredicate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api/ordemProducao")
@@ -25,6 +33,10 @@ import java.util.Objects;
 public class OrdemProducaoController {
 
     private OrdemProducaoService ordemProducaoService;
+
+    private UserRepository userRepository;
+
+
 
     @PostMapping()
     @PreAuthorize("hasRole('ADMIN')")
@@ -59,9 +71,18 @@ public class OrdemProducaoController {
             @RequestParam(name = "paginaSelecionada", defaultValue = "0") int paginaSelecionada) {
 
 
+        SecurityContext context = SecurityContextHolder.getContext();
+        User usuarioLogado = this.userRepository.findByUsername(context.getAuthentication().getName()).orElse(null);
+
         Pageable pageable = PageRequest.of(paginaSelecionada, tamanhoPagina);
 
         filtroURI = filtroURI.and(QOrdemProducao.ordemProducao.enumStatus.eq(EnumStatus.Ativo));
+
+        boolean role_admin = usuarioLogado.getRoles().stream().filter(role -> role.getName().equals(ERole.valueOf("ROLE_ADMIN"))).count() > 0;
+
+        if(usuarioLogado != null && !role_admin){
+            filtroURI = filtroURI.and(QOrdemProducao.ordemProducao.terceiro.usuario().id.eq(usuarioLogado.getId()));
+        }
 
         Page<OrdemProducao> ordemProducaoList = Objects.isNull(filtroURI) ?
                 this.ordemProducaoService.buscarTodos(pageable) :
